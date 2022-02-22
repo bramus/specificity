@@ -1,0 +1,24 @@
+{
+  "name": "@bramus/calculate-specificity",
+  "version": "1.0.0",
+  "main": "index.js",
+  "description": "Calculate specificity of a CSS Selector",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  "keywords": [
+    "css",
+    "specificity"
+  ],
+  "author": {
+    "name": "Bramus Van Damme",
+    "email": "bramus@bram.us",
+    "twitter": "@bramus",
+    "web": "https://www.bram.us/"
+  },
+  "license": "MIT",
+  },
+  "dependencies": {
+    "css-tree": "^2.0.4"
+  }
+}
