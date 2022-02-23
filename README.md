@@ -1,19 +1,19 @@
-# CSS Specificity Calculator
+# Specificity
 
 Calculate the Specificity of a given CSS Selector
 
 ## Installation
 
 ```bash
-npm i @bramus/calculate-specificity
+npm i @bramus/specificity
 ```
 
 ## Usage / Example
 
-This library comes as an ES Module and exposes a function/algorithm to generate an array of pagination entries.
+This library comes as an ES Module and exposes a `calculate` function which calculates the specificity of a given CSS selector.
 
 ```js
-import { calculate } from '@bramus/calculate-specificity';
+import { calculate } from '@bramus/specificity';
 
 const specificity = calculate('.foo :is(.bar, #baz)');
 // ~> { a: 1, b: 1, c: 0 }
@@ -21,7 +21,7 @@ const specificity = calculate('.foo :is(.bar, #baz)');
 
 ## License
 
-`@bramus/calculate-specificity` is released under the MIT public license. See the enclosed `LICENSE` for details.
+`@bramus/specificity` is released under the MIT public license. See the enclosed `LICENSE` for details.
 
 ## Acknowledgements
 

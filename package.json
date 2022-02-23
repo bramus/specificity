@@ -1,5 +1,5 @@
 {
-  "name": "@bramus/calculate-specificity",
+  "name": "@bramus/specificity",
   "version": "1.0.2",
   "description": "Calculate specificity of a CSS Selector",
   "type": "module",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bramus/js-calculate-specificity.git"
+    "url": "git+https://github.com/bramus/js-specificity.git"
   },
   "keywords": [
     "css",
@@ -34,9 +34,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bramus/js-calculate-specificity/issues"
+    "url": "https://github.com/bramus/js-specificity/issues"
   },
-  "homepage": "https://github.com/bramus/js-calculate-specificity#readme",
+  "homepage": "https://github.com/bramus/js-specificity#readme",
   "devDependencies": {
     "esbuild": "^0.14.5",
     "mocha": "^9.1.3"
