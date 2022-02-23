@@ -91,3 +91,9 @@ describe('Pseudo-Elements, improper use', () => {
         deepEqual(calculate(':first-letter'), { a: 0, b: 0, c: 1 });
     });
 });
+
+describe('PseudoClassSelector', () => {
+    it(':hover', () => {
+        deepEqual(calculate(':hover'), { a: 0, b: 1, c: 0 });
+    });
+});

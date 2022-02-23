@@ -106,6 +106,10 @@ const calculateSpecificityOfParsedSelector = (selector) => {
                     case 'first-line':
                         specificity.c += 1;
                         break;
+
+                    default:
+                        specificity.b += 1;
+                        break;
                 }
                 break;
 
