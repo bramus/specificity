@@ -1,6 +1,6 @@
 # Specificity
 
-Calculate the Specificity of a given CSS Selector
+Calculate the Specificity of a given CSS Selector. Supports [Selectors Level 4](https://www.w3.org/TR/selectors-4/), including those special cases `:is()`, `:where()`, `:not()`, etc. 
 
 ## Installation
 
