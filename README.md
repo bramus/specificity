@@ -31,6 +31,6 @@ A CJS-compatible build is also included.
 
 ## Acknowledgements
 
-The code was sparked by [the wonderful Specificity Calculator created by Kilian Valkhof / Polypane](https://polypane.app/css-specificity-calculator/).
+The idea to create this package was sparked by [the wonderful Specificity Calculator created by Kilian Valkhof / Polypane](https://polypane.app/css-specificity-calculator/), a highly educational tool that not only calculates the specificity, but also explains which parts are responsible for it.
 
 The heavy lifting of doing the actual parsing is done by [CSSTree](https://github.com/csstree/csstree).
