@@ -34,7 +34,7 @@ describe('Examples from the spec', () => {
     });
 });
 
-describe('Examples from Kilian', () => {
+describe('Examples by Kilian', () => {
     it('header h1#sitetitle > .logo = (1,1,2)', () => {
         deepEqual(calculate('header h1#sitetitle > .logo'), { a: 1, b: 1, c: 2 });
     });
@@ -46,7 +46,7 @@ describe('Examples from Kilian', () => {
     });
 });
 
-describe('Remixed examples from Kilian', () => {
+describe('Examples by Kilian, remixed', () => {
     it('header:has(#top) nav li:nth-child(2n + 1) = (1,1,3)', () => {
         deepEqual(calculate('header:has(#top) nav li:nth-child(2n + 1)'), { a: 1, b: 1, c: 3 });
     });
@@ -55,5 +55,39 @@ describe('Remixed examples from Kilian', () => {
     });
     it('header:has(#top) nav li:nth-child(2n + 1 of .foo, #bar) = (2,1,3)', () => {
         deepEqual(calculate('header:has(#top) nav li:nth-child(2n + 1 of .foo, #bar)'), { a: 2, b: 1, c: 3 });
+    });
+});
+
+describe('Pseudo-Elements', () => {
+    it('::after', () => {
+        deepEqual(calculate('::after'), { a: 0, b: 0, c: 1 });
+    });
+    it('::cue', () => {
+        deepEqual(calculate('::cue'), { a: 0, b: 0, c: 1 });
+    });
+    it('::before', () => {
+        deepEqual(calculate('::before'), { a: 0, b: 0, c: 1 });
+    });
+    it('::first-line', () => {
+        deepEqual(calculate('::first-line'), { a: 0, b: 0, c: 1 });
+    });
+    it('::first-letter', () => {
+        deepEqual(calculate('::first-letter'), { a: 0, b: 0, c: 1 });
+    });
+});
+
+// @ref https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements#index
+describe('Pseudo-Elements, improper use', () => {
+    it(':before', () => {
+        deepEqual(calculate(':before'), { a: 0, b: 0, c: 1 });
+    });
+    it(':after', () => {
+        deepEqual(calculate(':after'), { a: 0, b: 0, c: 1 });
+    });
+    it(':first-line', () => {
+        deepEqual(calculate(':first-line'), { a: 0, b: 0, c: 1 });
+    });
+    it(':first-letter', () => {
+        deepEqual(calculate(':first-letter'), { a: 0, b: 0, c: 1 });
     });
 });

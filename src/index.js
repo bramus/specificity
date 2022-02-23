@@ -81,6 +81,7 @@ const calculateSpecificityOfParsedSelector = (selector) => {
                         specificity.c += highest1.c;
 
                         break;
+
                     // “The specificity of an :nth-child() or :nth-last-child() selector is the specificity of the pseudo class itself (counting as one pseudo-class selector) plus the specificity of the most specific complex selector in its selector list argument”
                     case 'nth-child':
                     case 'nth-last-child':
@@ -97,13 +98,19 @@ const calculateSpecificityOfParsedSelector = (selector) => {
                         }
                         break;
 
-                    // case 'after':
-                    // case 'before':
-                    // case 'first-line':
-                    // case 'first-letter':
-                    //     specificity.c += 1;
-                    //     break;
+                    // Improper use of Pseudo-Element Selectors
+                    // @ref https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements#index
+                    case 'after':
+                    case 'before':
+                    case 'first-letter':
+                    case 'first-line':
+                        specificity.c += 1;
+                        break;
                 }
+                break;
+
+            case 'PseudoElementSelector':
+                specificity.c += 1;
                 break;
 
             case 'TypeSelector':
