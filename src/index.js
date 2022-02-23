@@ -1,4 +1,4 @@
-import * as csstree from 'css-tree';
+import csstreeParse from 'css-tree/parser';
 
 const calculateHighestSpecificityInSelectorList = (selectorList) => {
     // Calc specificity for each child Selector
@@ -75,7 +75,7 @@ const calculateSpecificityOfParsedSelector = (selector) => {
                         // Calculate Specificity from SelectorList
                         // Apparently this is Raw sometimes (unlike with nth-child below)
                         const highest1 = calculateHighestSpecificityInSelectorList(
-                            child.children.first.type == 'Raw' ? csstree.parse(child.children.first.value, { context: 'selectorList' }) : child.children.first
+                            child.children.first.type == 'Raw' ? csstreeParse(child.children.first.value, { context: 'selectorList' }) : child.children.first
                         );
 
                         // Adjust orig specificity
@@ -136,7 +136,7 @@ const calculateSpecificityOfParsedSelector = (selector) => {
 };
 
 const calculate = (selector) => {
-    const ast = csstree.parse(selector, {
+    const ast = csstreeParse(selector, {
         context: 'selectorList',
     });
 
