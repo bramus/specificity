@@ -1,6 +1,10 @@
+![Calculate CSS Specificity](./screenshots/calculate-specificity.png)
+
 # Specificity
 
-Calculate the Specificity of a given CSS Selector. Supports [Selectors Level 4](https://www.w3.org/TR/selectors-4/), including those special cases `:is()`, `:where()`, `:not()`, etc. 
+Calculate the Specificity of a given CSS Selector.
+
+Supports [Selectors Level 4](https://www.w3.org/TR/selectors-4/), including those special cases `:is()`, `:where()`, `:not()`, etc. 
 
 ## Installation
 
@@ -18,6 +22,8 @@ import { calculate } from '@bramus/specificity';
 const specificity = calculate('.foo :is(.bar, #baz)');
 // ~> { a: 1, b: 1, c: 0 }
 ```
+
+A CJS-compatible build is also included.
 
 ## License
 
