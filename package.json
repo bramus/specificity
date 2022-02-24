@@ -1,6 +1,6 @@
 {
   "name": "@bramus/specificity",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Calculate specificity of a CSS Selector",
   "type": "module",
   "main": "dist/index.cjs.js",
