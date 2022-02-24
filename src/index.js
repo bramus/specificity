@@ -70,6 +70,7 @@ const calculateSpecificityOfParsedSelector = (selector) => {
                     case "matches":
                     case "-webkit-any":
                     case "-moz-any":
+                    case "any":
                     case 'not':
                     case 'has':
                         // Calculate Specificity from SelectorList
