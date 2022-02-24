@@ -7,8 +7,8 @@ if (!process.argv[2]) {
 }
 
 try {
-    const specificity = calculate(process.argv[2]);
-    console.log(`(${specificity.a},${specificity.b},${specificity.c})`);
+    const specificities = calculate(process.argv[2]);
+    console.log(specificities.map((specificity) => `(${specificity.a},${specificity.b},${specificity.c})`).join('\n'));
 } catch (e) {
     console.error(`❌ ${e.message}`);
 }

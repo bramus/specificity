@@ -142,16 +142,20 @@ const calculateSpecificityOfParsedSelector = (selector) => {
     return specificity;
 };
 
-const calculate = (selector) => {
-    const ast = csstreeParse(selector, {
+const calculate = (selectorList) => {
+    const ast = csstreeParse(selectorList, {
         context: 'selectorList',
     });
 
-    if (ast.children.size > 1) {
-        throw new TypeError('Please pass in only 1 Selector');
+    if (!ast.children.size) {
+        return [];
     }
 
-    return calculateSpecificityOfParsedSelector(ast.children.first);
+    const calculatedSpecificities = [];
+    ast.children.forEach((selector) => {
+        calculatedSpecificities.push(calculateSpecificityOfParsedSelector(selector));
+    });
+    return calculatedSpecificities;
 };
 
 export { calculate };
