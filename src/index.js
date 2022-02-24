@@ -74,7 +74,7 @@ const calculateSpecificityOfParsedSelector = (selector) => {
                     case 'not':
                     case 'has':
                         // Calculate Specificity from SelectorList
-                        // Apparently this is Raw sometimes (unlike with nth-child below)
+                        // @note Manually parsing subtree when the child is of the type Raw, due to https://github.com/csstree/csstree/issues/151
                         const highest1 = calculateHighestSpecificityInSelectorList(
                             child.children.first.type == 'Raw' ? csstreeParse(child.children.first.value, { context: 'selectorList' }) : child.children.first
                         );
