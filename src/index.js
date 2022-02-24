@@ -122,8 +122,14 @@ const calculateSpecificityOfParsedSelector = (selector) => {
                 break;
 
             case 'TypeSelector':
+                // Omit namespace
+                let typeSelector = child.name;
+                if (typeSelector.includes('|')) {
+                    typeSelector = typeSelector.split('|')[1];
+                }
+
                 // “Ignore the universal selector”
-                if (child.name !== '*') {
+                if (typeSelector !== '*') {
                     specificity.c += 1;
                 }
                 break;

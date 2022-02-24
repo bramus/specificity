@@ -136,3 +136,13 @@ describe('CSS :where() = Replaced by zero', () => {
         deepEqual(calculate(':where(#foo, .bar, baz)'), { a: 0, b: 0, c: 0 });
     });
 });
+
+// @ref https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors#namespaces
+describe('Namespaced Selectors', () => {
+    it('ns|* = (0,0,0)', () => {
+        deepEqual(calculate('ns|*'), { a: 0, b: 0, c: 0 });
+    });
+    it('ns|a = (0,0,1)', () => {
+        deepEqual(calculate('ns|a'), { a: 0, b: 0, c: 1 });
+    });
+});
