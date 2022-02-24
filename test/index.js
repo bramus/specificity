@@ -58,7 +58,7 @@ describe('Examples by Kilian, remixed', () => {
     });
 });
 
-describe('Pseudo-Elements', () => {
+describe('Pseudo-Element Selector = (0,0,1)', () => {
     it('::after', () => {
         deepEqual(calculate('::after'), { a: 0, b: 0, c: 1 });
     });
@@ -77,7 +77,7 @@ describe('Pseudo-Elements', () => {
 });
 
 // @ref https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements#index
-describe('Pseudo-Elements, improper use', () => {
+describe('Pseudo-Element improperly used as Pseudo-Class Selector = (0,0,1)', () => {
     it(':before', () => {
         deepEqual(calculate(':before'), { a: 0, b: 0, c: 1 });
     });
@@ -92,8 +92,47 @@ describe('Pseudo-Elements, improper use', () => {
     });
 });
 
-describe('PseudoClassSelector', () => {
+describe('Pseudo-Class Selector = (0,1,0)', () => {
     it(':hover', () => {
         deepEqual(calculate(':hover'), { a: 0, b: 1, c: 0 });
+    });
+    it(':focus', () => {
+        deepEqual(calculate(':focus'), { a: 0, b: 1, c: 0 });
+    });
+});
+
+describe('CSS :is() - :matches() - :any() = Specificity of the most specific complex selector in its selector list argument', () => {
+    it(':is(#foo, .bar, baz) = (1,0,0)', () => {
+        deepEqual(calculate(':is(#foo, .bar, baz)'), { a: 1, b: 0, c: 0 });
+    });
+    it(':matches(#foo, .bar, baz) = (1,0,0)', () => {
+        deepEqual(calculate(':matches(#foo, .bar, baz)'), { a: 1, b: 0, c: 0 });
+    });
+    it(':any(#foo, .bar, baz) = (1,0,0)', () => {
+        deepEqual(calculate(':any(#foo, .bar, baz)'), { a: 1, b: 0, c: 0 });
+    });
+    it(':-moz-any(#foo, .bar, baz) = (1,0,0)', () => {
+        deepEqual(calculate(':-moz-any(#foo, .bar, baz)'), { a: 1, b: 0, c: 0 });
+    });
+    it(':-webkit-any(#foo, .bar, baz) = (1,0,0)', () => {
+        deepEqual(calculate(':-webkit-any(#foo, .bar, baz)'), { a: 1, b: 0, c: 0 });
+    });
+});
+
+describe('CSS :has() = Specificity of the most specific complex selector in its selector list argument', () => {
+    it(':has(#foo, .bar, baz) = (1,0,0)', () => {
+        deepEqual(calculate(':has(#foo, .bar, baz)'), { a: 1, b: 0, c: 0 });
+    });
+});
+
+describe('CSS :not() = Specificity of the most specific complex selector in its selector list argument', () => {
+    it(':not(#foo, .bar, baz) = (1,0,0)', () => {
+        deepEqual(calculate(':not(#foo, .bar, baz)'), { a: 1, b: 0, c: 0 });
+    });
+});
+
+describe('CSS :where() = Replaced by zero', () => {
+    it(':where(#foo, .bar, baz) = (0,0,0)', () => {
+        deepEqual(calculate(':where(#foo, .bar, baz)'), { a: 0, b: 0, c: 0 });
     });
 });
