@@ -147,6 +147,13 @@ describe('CALCULATE', () => {
             deepEqual(calculate('ns|a')[0].toObject(), { a: 0, b: 0, c: 1 });
         });
     });
+
+    describe('Calculate accepts multiple selectors (i.e. a SelectorList)', () => {
+        it('foo, .bar = [(0,0,1),(0,1,0)]', () => {
+            deepEqual(calculate('foo, .bar')[0].toObject(), { a: 0, b: 0, c: 1 });
+            deepEqual(calculate('foo, .bar')[1].toObject(), { a: 0, b: 1, c: 0 });
+        });
+    });
 });
 
 describe('COMPARE', () => {
@@ -154,7 +161,9 @@ describe('COMPARE', () => {
     const sMed = { a: 0, b: 1, c: 0 };
     const sLow = { a: 0, b: 0, c: 1 };
 
-    describe('compare', () => {
+    const [sHighObject, sMedObject, sLowObject] = calculate('#foo, .foo, baz');
+
+    describe('compare (using plain Objects)', () => {
         it('compare(sHigh, sLow) = -1', () => {
             deepEqual(compare(sHigh, sLow), -1);
         });
@@ -166,7 +175,19 @@ describe('COMPARE', () => {
         });
     });
 
-    describe('moreSpecificThan', () => {
+    describe('compare (using Specificity Instances)', () => {
+        it('compare(sHighObject, sLowObject) = -1', () => {
+            deepEqual(compare(sHighObject, sLowObject), -1);
+        });
+        it('compare(sLowObject, sHighObject) = 1', () => {
+            deepEqual(compare(sLowObject, sHighObject), 1);
+        });
+        it('compare(sMedObject, sMedObject) = 0', () => {
+            deepEqual(compare(sMedObject, sMedObject), 0);
+        });
+    });
+
+    describe('moreSpecificThan (using plain Objects)', () => {
         it('moreSpecificThan(sHigh, sLow) = true', () => {
             deepEqual(moreSpecificThan(sHigh, sLow), true);
         });
@@ -178,7 +199,19 @@ describe('COMPARE', () => {
         });
     });
 
-    describe('lessSpecificThan', () => {
+    describe('moreSpecificThan (using Specificity Instances)', () => {
+        it('moreSpecificThan(sHighObject, sLowObject) = true', () => {
+            deepEqual(moreSpecificThan(sHighObject, sLowObject), true);
+        });
+        it('moreSpecificThan(sLowObject, sHighObject) = false', () => {
+            deepEqual(moreSpecificThan(sLowObject, sHighObject), false);
+        });
+        it('moreSpecificThan(sMedObject, sMedObject) = false', () => {
+            deepEqual(moreSpecificThan(sMedObject, sMedObject), false);
+        });
+    });
+
+    describe('lessSpecificThan (using plain Objects)', () => {
         it('lessSpecificThan(sHigh, sLow) = false', () => {
             deepEqual(lessSpecificThan(sHigh, sLow), false);
         });
@@ -190,7 +223,19 @@ describe('COMPARE', () => {
         });
     });
 
-    describe('equals', () => {
+    describe('Call lessSpecificThan with Specificity Instances', () => {
+        it('lessSpecificThan(sHighObject, sLowObject) = false', () => {
+            deepEqual(lessSpecificThan(sHighObject, sLowObject), false);
+        });
+        it('lessSpecificThan(sLowObject, sHighObject) = true', () => {
+            deepEqual(lessSpecificThan(sLowObject, sHighObject), true);
+        });
+        it('lessSpecificThan(sMedObject, sMedObject) = false', () => {
+            deepEqual(lessSpecificThan(sMedObject, sMedObject), false);
+        });
+    });
+
+    describe('equals (using plain Objects)', () => {
         it('equals(sHigh, sLow) = false', () => {
             deepEqual(equals(sHigh, sLow), false);
         });
@@ -199,6 +244,18 @@ describe('COMPARE', () => {
         });
         it('equals(sMed, sMed) = true', () => {
             deepEqual(equals(sMed, sMed), true);
+        });
+    });
+
+    describe('equals (using Specificity Instances)', () => {
+        it('equals(sHighObject, sLowObject) = false', () => {
+            deepEqual(equals(sHighObject, sLowObject), false);
+        });
+        it('equals(sLowObject, sHighObject) = false', () => {
+            deepEqual(equals(sLowObject, sHighObject), false);
+        });
+        it('equals(sMedObject, sMedObject) = true', () => {
+            deepEqual(equals(sMedObject, sMedObject), true);
         });
     });
 });
@@ -212,7 +269,9 @@ describe('SORT', () => {
     const sortedHighToLow = [sHigh, sMed, sLow];
     const sortedLowToHigh = [sLow, sMed, sHigh];
 
-    describe('ascending', () => {
+    const notSortedObjects = calculate('.bar, #foo, baz');
+
+    describe('ascending (using plain Objects)', () => {
         it('ascending(notSorted)', () => {
             deepEqual(ascending(notSorted), sortedLowToHigh);
         });
@@ -221,12 +280,42 @@ describe('SORT', () => {
         });
     });
 
-    describe('descending', () => {
+    describe('ascending (using Specificity Instances)', () => {
+        it('ascending(notSortedObjects)', () => {
+            deepEqual(
+                ascending(notSortedObjects).map((s) => s.value),
+                sortedLowToHigh
+            );
+        });
+        it('sort(notSortedObjects, "ASC")', () => {
+            deepEqual(
+                sort(notSortedObjects, 'ASC').map((s) => s.value),
+                sortedLowToHigh
+            );
+        });
+    });
+
+    describe('descending (using plain Objects)', () => {
         it('descending(notSorted)', () => {
             deepEqual(descending(notSorted), sortedHighToLow);
         });
         it('sort(notSorted, "DESC")', () => {
             deepEqual(sort(notSorted, 'DESC'), sortedHighToLow);
+        });
+    });
+
+    describe('descending (using Specificity Instances)', () => {
+        it('descending(notSortedObjects)', () => {
+            deepEqual(
+                descending(notSortedObjects).map((s) => s.value),
+                sortedHighToLow
+            );
+        });
+        it('sort(notSortedObjects, "DESC")', () => {
+            deepEqual(
+                sort(notSortedObjects, 'DESC').map((s) => s.value),
+                sortedHighToLow
+            );
         });
     });
 });
@@ -238,15 +327,29 @@ describe('FILTER', () => {
 
     const notSorted = [sMed, sHigh, sLow];
 
-    describe('highest', () => {
+    const notSortedObjects = calculate('.bar, #foo, baz');
+
+    describe('highest (using plain Objects)', () => {
         it('highest(notSorted)', () => {
             deepEqual(highest(notSorted), sHigh);
         });
     });
 
-    describe('lowest', () => {
+    describe('highest (using Specificity Instances)', () => {
+        it('highest(notSortedObjects)', () => {
+            deepEqual(highest(notSortedObjects).value, sHigh);
+        });
+    });
+
+    describe('lowest (using plain Objects)', () => {
         it('lowest(notSorted)', () => {
             deepEqual(lowest(notSorted), sLow);
+        });
+    });
+
+    describe('lowest (using Specificity Instances)', () => {
+        it('lowest(notSortedObjects)', () => {
+            deepEqual(lowest(notSortedObjects).value, sLow);
         });
     });
 });
