@@ -4,3 +4,4 @@ src
 .prettierrc
 .gitignore
 package-lock.json
+.github
