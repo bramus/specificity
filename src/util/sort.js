@@ -8,15 +8,15 @@ const sort = (specificities, order = 'ASC') => {
     }
 
     return sorted;
-}
+};
 
 const ascending = (specificities) => {
     return sort(specificities, 'ASC');
-}
+};
 
 const descending = (specificities) => {
     return sort(specificities, 'DESC');
-}
+};
 
 export { ascending, descending };
 export default sort;

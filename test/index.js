@@ -217,7 +217,7 @@ describe('SORT', () => {
             deepEqual(ascending(notSorted), sortedLowToHigh);
         });
         it('sort(notSorted, "ASC")', () => {
-            deepEqual(sort(notSorted, "ASC"), sortedLowToHigh);
+            deepEqual(sort(notSorted, 'ASC'), sortedLowToHigh);
         });
     });
 
@@ -226,10 +226,9 @@ describe('SORT', () => {
             deepEqual(descending(notSorted), sortedHighToLow);
         });
         it('sort(notSorted, "DESC")', () => {
-            deepEqual(sort(notSorted, "DESC"), sortedHighToLow);
+            deepEqual(sort(notSorted, 'DESC'), sortedHighToLow);
         });
     });
-
 });
 
 describe('FILTER', () => {
@@ -250,5 +249,4 @@ describe('FILTER', () => {
             deepEqual(lowest(notSorted), sLow);
         });
     });
-
 });
