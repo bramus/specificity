@@ -1,6 +1,6 @@
 import parse from 'css-tree/parser';
-import Specificity from './type/Specificity.js';
-import { highest } from './filter.js';
+import { Specificity } from './../type/index.js';
+import { highest } from './../util/index.js';
 
 const calculateSpecificityOfSelectorObject = (selectorObj) => {
     // https://www.w3.org/TR/selectors-4/#specificity-rules

@@ -1,5 +1,5 @@
 import generate from 'css-tree/generator';
-import { equals, moreSpecificThan, lessSpecificThan } from './../compare.js';
+import { equals, moreSpecificThan, lessSpecificThan } from './../util/compare.js';
 
 class Specificity {
     constructor(value, selector = null) {

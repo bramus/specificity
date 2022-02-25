@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { calculate } from './index.js';
+import { calculate } from './core';
 
 if (!process.argv[2]) {
     console.error('❌ Missing selector argument');
