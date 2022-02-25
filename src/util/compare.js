@@ -1,24 +1,24 @@
 const compare = (s1, s2) => {
     if (s1.a === s2.a) {
         if (s1.b === s2.b) {
-            return s2.c - s1.c;
+            return s1.c - s2.c;
         }
-        return s2.b - s1.b;
+        return s1.b - s2.b;
     }
-    return s2.a - s1.a;
+    return s1.a - s2.a;
 };
 
 const equals = (s1, s2) => {
     return compare(s1, s2) === 0;
 };
 
-const moreSpecificThan = (s1, s2) => {
-    return compare(s1, s2) === -1;
+const greaterThan = (s1, s2) => {
+    return compare(s1, s2) > 0;
 };
 
-const lessSpecificThan = (s1, s2) => {
-    return compare(s1, s2) === 1;
+const lessThan = (s1, s2) => {
+    return compare(s1, s2) < 0;
 };
 
-export { equals, moreSpecificThan, lessSpecificThan };
+export { equals, greaterThan, lessThan };
 export default compare;

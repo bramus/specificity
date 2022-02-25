@@ -45,15 +45,15 @@ describe('Specificity Class', () => {
         const sHigh = calculate('#foo#bar.baz a b c')[0];
         const sLow = calculate('#foo.baz a b c')[0];
 
-        it('Specificity.isMoreSpecificThan()', () => {
-            deepEqual(s.isMoreSpecificThan(s), false);
-            deepEqual(s.isMoreSpecificThan(sHigh), false);
-            deepEqual(s.isMoreSpecificThan(sLow), true);
+        it('Specificity.isGreaterThan()', () => {
+            deepEqual(s.isGreaterThan(s), false);
+            deepEqual(s.isGreaterThan(sHigh), false);
+            deepEqual(s.isGreaterThan(sLow), true);
         });
-        it('Specificity.isLessSpecificThan()', () => {
-            deepEqual(s.isLessSpecificThan(s), false);
-            deepEqual(s.isLessSpecificThan(sHigh), true);
-            deepEqual(s.isLessSpecificThan(sLow), false);
+        it('Specificity.isLessThan()', () => {
+            deepEqual(s.isLessThan(s), false);
+            deepEqual(s.isLessThan(sHigh), true);
+            deepEqual(s.isLessThan(sLow), false);
         });
         it('Specificity.equals()', () => {
             deepEqual(s.equals(s), true);

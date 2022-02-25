@@ -1,5 +1,5 @@
 import { equal, deepEqual } from 'assert';
-import { calculate, compare, moreSpecificThan, lessSpecificThan, equals, sort, ascending, descending, highest, lowest } from '../src/index.js';
+import { calculate, compare, greaterThan, lessThan, equals, sort, ascending, descending, highest, lowest } from '../src/index.js';
 
 describe('CALCULATE', () => {
     describe('Examples from the spec', () => {
@@ -164,11 +164,11 @@ describe('COMPARE', () => {
     const [sHighObject, sMedObject, sLowObject] = calculate('#foo, .foo, baz');
 
     describe('compare (using plain Objects)', () => {
-        it('compare(sHigh, sLow) = -1', () => {
-            deepEqual(compare(sHigh, sLow), -1);
+        it('compare(sHigh, sLow) = 1', () => {
+            deepEqual(compare(sHigh, sLow), 1);
         });
-        it('compare(sLow, sHigh) = 1', () => {
-            deepEqual(compare(sLow, sHigh), 1);
+        it('compare(sLow, sHigh) = -1', () => {
+            deepEqual(compare(sLow, sHigh), -1);
         });
         it('compare(sMed, sMed) = 0', () => {
             deepEqual(compare(sMed, sMed), 0);
@@ -176,62 +176,62 @@ describe('COMPARE', () => {
     });
 
     describe('compare (using Specificity Instances)', () => {
-        it('compare(sHighObject, sLowObject) = -1', () => {
-            deepEqual(compare(sHighObject, sLowObject), -1);
+        it('compare(sHighObject, sLowObject) = 1', () => {
+            deepEqual(compare(sHighObject, sLowObject), 1);
         });
-        it('compare(sLowObject, sHighObject) = 1', () => {
-            deepEqual(compare(sLowObject, sHighObject), 1);
+        it('compare(sLowObject, sHighObject) = -1', () => {
+            deepEqual(compare(sLowObject, sHighObject), -1);
         });
         it('compare(sMedObject, sMedObject) = 0', () => {
             deepEqual(compare(sMedObject, sMedObject), 0);
         });
     });
 
-    describe('moreSpecificThan (using plain Objects)', () => {
-        it('moreSpecificThan(sHigh, sLow) = true', () => {
-            deepEqual(moreSpecificThan(sHigh, sLow), true);
+    describe('greaterThan (using plain Objects)', () => {
+        it('greaterThan(sHigh, sLow) = true', () => {
+            deepEqual(greaterThan(sHigh, sLow), true);
         });
-        it('moreSpecificThan(sLow, sHigh) = false', () => {
-            deepEqual(moreSpecificThan(sLow, sHigh), false);
+        it('greaterThan(sLow, sHigh) = false', () => {
+            deepEqual(greaterThan(sLow, sHigh), false);
         });
-        it('moreSpecificThan(sMed, sMed) = false', () => {
-            deepEqual(moreSpecificThan(sMed, sMed), false);
-        });
-    });
-
-    describe('moreSpecificThan (using Specificity Instances)', () => {
-        it('moreSpecificThan(sHighObject, sLowObject) = true', () => {
-            deepEqual(moreSpecificThan(sHighObject, sLowObject), true);
-        });
-        it('moreSpecificThan(sLowObject, sHighObject) = false', () => {
-            deepEqual(moreSpecificThan(sLowObject, sHighObject), false);
-        });
-        it('moreSpecificThan(sMedObject, sMedObject) = false', () => {
-            deepEqual(moreSpecificThan(sMedObject, sMedObject), false);
+        it('greaterThan(sMed, sMed) = false', () => {
+            deepEqual(greaterThan(sMed, sMed), false);
         });
     });
 
-    describe('lessSpecificThan (using plain Objects)', () => {
-        it('lessSpecificThan(sHigh, sLow) = false', () => {
-            deepEqual(lessSpecificThan(sHigh, sLow), false);
+    describe('greaterThan (using Specificity Instances)', () => {
+        it('greaterThan(sHighObject, sLowObject) = true', () => {
+            deepEqual(greaterThan(sHighObject, sLowObject), true);
         });
-        it('lessSpecificThan(sLow, sHigh) = true', () => {
-            deepEqual(lessSpecificThan(sLow, sHigh), true);
+        it('greaterThan(sLowObject, sHighObject) = false', () => {
+            deepEqual(greaterThan(sLowObject, sHighObject), false);
         });
-        it('lessSpecificThan(sMed, sMed) = false', () => {
-            deepEqual(lessSpecificThan(sMed, sMed), false);
+        it('greaterThan(sMedObject, sMedObject) = false', () => {
+            deepEqual(greaterThan(sMedObject, sMedObject), false);
         });
     });
 
-    describe('Call lessSpecificThan with Specificity Instances', () => {
-        it('lessSpecificThan(sHighObject, sLowObject) = false', () => {
-            deepEqual(lessSpecificThan(sHighObject, sLowObject), false);
+    describe('lessThan (using plain Objects)', () => {
+        it('lessThan(sHigh, sLow) = false', () => {
+            deepEqual(lessThan(sHigh, sLow), false);
         });
-        it('lessSpecificThan(sLowObject, sHighObject) = true', () => {
-            deepEqual(lessSpecificThan(sLowObject, sHighObject), true);
+        it('lessThan(sLow, sHigh) = true', () => {
+            deepEqual(lessThan(sLow, sHigh), true);
         });
-        it('lessSpecificThan(sMedObject, sMedObject) = false', () => {
-            deepEqual(lessSpecificThan(sMedObject, sMedObject), false);
+        it('lessThan(sMed, sMed) = false', () => {
+            deepEqual(lessThan(sMed, sMed), false);
+        });
+    });
+
+    describe('Call lessThan with Specificity Instances', () => {
+        it('lessThan(sHighObject, sLowObject) = false', () => {
+            deepEqual(lessThan(sHighObject, sLowObject), false);
+        });
+        it('lessThan(sLowObject, sHighObject) = true', () => {
+            deepEqual(lessThan(sLowObject, sHighObject), true);
+        });
+        it('lessThan(sMedObject, sMedObject) = false', () => {
+            deepEqual(lessThan(sMedObject, sMedObject), false);
         });
     });
 

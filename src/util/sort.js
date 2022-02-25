@@ -3,7 +3,7 @@ import compare from './compare.js';
 const sort = (specificities, order = 'ASC') => {
     const sorted = specificities.sort(compare);
 
-    if (order === 'ASC') {
+    if (order === 'DESC') {
         return sorted.reverse();
     }
 
