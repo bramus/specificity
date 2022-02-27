@@ -1,4 +1,4 @@
-import csstreeParse from 'css-tree/parser';
+import csstreeParse from 'css-tree/selector-parser';
 
 const calculateHighestSpecificityInSelectorList = (selectorList) => {
     // Calc specificity for each child Selector
