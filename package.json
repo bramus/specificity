@@ -51,6 +51,6 @@
     "semver": "^7.3.5"
   },
   "dependencies": {
-    "css-tree": "^2.0.4"
+    "css-tree": "^2.1.0"
   }
 }
