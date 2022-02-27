@@ -1,4 +1,4 @@
-import parse from 'css-tree/parser';
+import parse from 'css-tree/selector-parser';
 import { Specificity } from './../type/index.js';
 import { highest } from './../util/index.js';
 
