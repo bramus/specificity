@@ -1,5 +1,7 @@
 ![Calculate CSS Specificity](./screenshots/calculate-specificity.png)
 
+🔥 You are now reading the documentation for v1 of `@bramus/specificity`. Version 2 is currently being worked on, and will be released soon. You can [check out a preview of v2 in the `dev` branch](https://github.com/bramus/js-specificity/tree/dev).
+
 # Specificity
 
 Calculate the Specificity of a given CSS Selector.
