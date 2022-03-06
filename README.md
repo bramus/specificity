@@ -2,7 +2,7 @@
 
 # Specificity
 
-Package to calculate the Specificity of a given CSS Selector/SelectorList. Also includes some convenience functions to compare, sort, and filter an array of specificity values.
+Package to calculate the Specificity of CSS Selectors. Also includes some convenience functions to compare, sort, and filter an array of specificity values.
 
 Supports [Selectors Level 4](https://www.w3.org/TR/selectors-4/), including those special cases `:is()`, `:where()`, `:not()`, etc. 
 
@@ -23,14 +23,14 @@ const specificity = calculate('.foo :is(.bar, #baz)');
 
 ## The Return Format
 
-Because calculate accepts a Selectorlist — which can contain more than 1 Selector — it will always return an array. Contained in the array are instances of the `Specificity` class.
+Because `calculate` accepts a [Selector List](https://www.w3.org/TR/selectors-4/#grouping) — which can contain more than 1 [Selector](https://www.w3.org/TR/selectors-4/#selector) — it will always return an array. Contained in the array are instances of the `Specificity` class that also comes with `@bramus/specificity`.
 
-The `Specificity` class comes with methods to get the specificity value in a certain format, along with some convenience methods to compare it against other instances.
+The `Specificity` class includes methods to get the specificity value in a certain format, along with some convenience methods to compare it against other instances.
 
 ```js
 import { calculate } from '@bramus/specificity';
 
-// ✨ Now supports SelectorsLists, and therefore will always return an array
+// ✨ Calculate accepts a Selectors List, and will therefore always return an array
 const specificities = calculate('#foo.bar.baz a b c, .second-selector');
 specificities.map(s => `${s}`).join('\n');
 // (1,2,3)
@@ -87,7 +87,7 @@ This package also exposes some convenience functions to work with an array speci
     - `min(specificities)`: Filters out the value with the lowest specificity
     - `max(specificities)`: Filters out the value with the highest specificity
 
-A passed in specificity to any of these functions can be one of:
+A specificity passed into any of these utility functions can be any of:
 
 - An instance of the included `Specificity` class
 - A simple Object such as `{'a': 1, 'b': 0, 'c': 2}`
