@@ -1,5 +1,5 @@
 import { equal, deepEqual } from 'assert';
-import { calculate, compare, greaterThan, lessThan, equals, sort, ascending, descending, highest, lowest } from '../src/index.js';
+import { calculate, compare, greaterThan, lessThan, equals, sort, ascending, descending, max, min } from '../src/index.js';
 
 describe('CALCULATE', () => {
     describe('Examples from the spec', () => {
@@ -329,27 +329,27 @@ describe('FILTER', () => {
 
     const notSortedObjects = calculate('.bar, #foo, baz');
 
-    describe('highest (using plain Objects)', () => {
-        it('highest(notSorted)', () => {
-            deepEqual(highest(notSorted), sHigh);
+    describe('max (using plain Objects)', () => {
+        it('max(notSorted)', () => {
+            deepEqual(max(notSorted), sHigh);
         });
     });
 
-    describe('highest (using Specificity Instances)', () => {
-        it('highest(notSortedObjects)', () => {
-            deepEqual(highest(notSortedObjects).value, sHigh);
+    describe('max (using Specificity Instances)', () => {
+        it('max(notSortedObjects)', () => {
+            deepEqual(max(notSortedObjects).value, sHigh);
         });
     });
 
-    describe('lowest (using plain Objects)', () => {
-        it('lowest(notSorted)', () => {
-            deepEqual(lowest(notSorted), sLow);
+    describe('min (using plain Objects)', () => {
+        it('min(notSorted)', () => {
+            deepEqual(min(notSorted), sLow);
         });
     });
 
-    describe('lowest (using Specificity Instances)', () => {
-        it('lowest(notSortedObjects)', () => {
-            deepEqual(lowest(notSortedObjects).value, sLow);
+    describe('min (using Specificity Instances)', () => {
+        it('min(notSortedObjects)', () => {
+            deepEqual(min(notSortedObjects).value, sLow);
         });
     });
 });

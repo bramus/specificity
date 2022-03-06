@@ -1,6 +1,6 @@
 import parse from 'css-tree/selector-parser';
 import { Specificity } from './../type/index.js';
-import { highest } from './../util/index.js';
+import { max } from './../util/index.js';
 
 const calculateSpecificityOfSelectorObject = (selectorObj) => {
     // https://www.w3.org/TR/selectors-4/#specificity-rules
@@ -38,12 +38,12 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                     case 'has':
                         // Calculate Specificity from nested SelectorList
                         // @note Manually parsing subtree when the child is of the type Raw, due to https://github.com/csstree/csstree/issues/151
-                        const highest1 = highest(calculate(child.children.first.type == 'Raw' ? parse(child.children.first.value, { context: 'selectorList' }) : child.children.first));
+                        const max1 = max(calculate(child.children.first.type == 'Raw' ? parse(child.children.first.value, { context: 'selectorList' }) : child.children.first));
 
                         // Adjust orig specificity
-                        specificity.a += highest1.a;
-                        specificity.b += highest1.b;
-                        specificity.c += highest1.c;
+                        specificity.a += max1.a;
+                        specificity.b += max1.b;
+                        specificity.c += max1.c;
 
                         break;
 
@@ -54,12 +54,12 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
 
                         if (child.children.first.selector) {
                             // Calculate Specificity from SelectorList
-                            const highest2 = highest(calculate(child.children.first.selector));
+                            const max2 = max(calculate(child.children.first.selector));
 
                             // Adjust orig specificity
-                            specificity.a += highest2.a;
-                            specificity.b += highest2.b;
-                            specificity.c += highest2.c;
+                            specificity.a += max2.a;
+                            specificity.b += max2.b;
+                            specificity.c += max2.c;
                         }
                         break;
 

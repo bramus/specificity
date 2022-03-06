@@ -84,8 +84,8 @@ This package also exposes some convenience functions to work with an array speci
     - `sort(specificities, order = 'ASC')`: Sorts the array of given specificities in the give order (`'ASC'` or `'DESC'`)
 
 - Filter functions:
-    - `highest(specificities)`: Filters out the value with the highest specificity
-    - `lowest(specificities)`: Filters out the value with the lowest specificity
+    - `min(specificities)`: Filters out the value with the lowest specificity
+    - `max(specificities)`: Filters out the value with the highest specificity
 
 A passed in specificity to any of these functions can be one of:
 
@@ -99,7 +99,7 @@ import {
     calculate,
     compare, equals, greaterThan, lessThan,
     ascending, descending, sort,
-    highest, lowest
+    min, max
 } from '@bramus/specificity'
 ```
 
