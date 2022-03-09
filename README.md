@@ -26,7 +26,7 @@ Because `calculate` accepts a [Selector List](https://www.w3.org/TR/selectors-4/
 ```js
 import { calculate } from '@bramus/specificity';
 const specificities = calculate('#foo.bar.baz a b c, .second-selector');
-specificities.map(s => s.toString()); // [(1,2,3), (0,1,0)]
+specificities.map(s => s.toString()); // ["(1,2,3)","(0,1,0)"]
 ```
 
 To calculate the specificity of a single Selector, you can use `calculateSingle`
@@ -34,7 +34,7 @@ To calculate the specificity of a single Selector, you can use `calculateSingle`
 ```js
 import { calculateSingle } from '@bramus/specificity';
 const specificity = calculateSingle('.foo :is(.bar, #baz)');
-specificity.toString(); // (1,1,0)
+specificity.toString(); // "(1,1,0)"
 ```
 
 ## The Return Format
