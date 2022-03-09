@@ -3,13 +3,36 @@
   "version": "2.0.0-beta.2",
   "description": "Calculate specificity of a CSS Selector",
   "type": "module",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "export": {
-    ".": "./dist/index.esm.js",
-    "import": "./dist/index.esm.js",
-    "require": "./dist/index.cjs.js"
+  "main": "./dist/index.cjs.js",
+  "module": "./src/index.js",
+  "exports": {
+    ".": {
+      "browser": "./dist/index.esm.js",
+      "import": "./src/index.js",
+      "require": "./dist/index.cjs.js"
+    },
+    "./types": {
+      "import": "./src/type/index.js"
+    },
+    "./util": {
+      "import": "./src/util/index.js"
+    },
+    "./compare": {
+      "import": "./src/util/compare.js"
+    },
+    "./filter": {
+      "import": "./src/util/filter.js"
+    },
+    "./sort": {
+      "import": "./src/util/sort.js"
+    }
   },
+  "unpkg": "./dist/index.esm.js",
+  "jsdelivr": "./dist/index.esm.js",
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
     "build-esm": "esbuild --bundle ./src/index.js --outfile=./dist/index.esm.js --format=esm --sourcemap --minify",
     "build-cjs": "esbuild --bundle ./src/index.js --outfile=./dist/index.cjs.js --format=cjs --sourcemap --minify",

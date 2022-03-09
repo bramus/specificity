@@ -92,16 +92,17 @@ A specificity passed into any of these utility functions can be any of:
 - An instance of the included `Specificity` class
 - A simple Object such as `{'a': 1, 'b': 0, 'c': 2}`
 
-All these functions are exported from the main `index.js` entrypoint.
+All these functions are exported from the main `index.js` entrypoint, in addition to the `calculate` function.
 
 ```js
 import {
-    calculate,
     compare, equals, greaterThan, lessThan,
     ascending, descending, sort,
     min, max
 } from '@bramus/specificity'
 ```
+
+💡 If you're only interested in including these helper functions into your project — without `calculate` — you can import them from `@bramus/specificity/util`. As a result, your bundle size will be reduced greatly.
 
 ## License
 
