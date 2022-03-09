@@ -171,4 +171,21 @@ const calculate = (selector) => {
     return specificities;
 };
 
-export default calculate;
+const calculateSingle = (selector) => {
+    // Quit while you're ahead
+    if (!selector) {
+        return null;
+    }
+
+    // Make sure we have a Selector AST
+    // If not, an exception will be thrown
+    const ast = convertToAST(selector, 'Selector');
+
+    // Calculate Specificity for the first found Selector
+    const specificity = calculateSpecificityOfSelectorObject(ast.children.first);
+
+    // Here ya go!
+    return specificity;
+};
+
+export { calculate, calculateSingle };

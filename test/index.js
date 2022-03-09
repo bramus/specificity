@@ -1,5 +1,5 @@
-import { calculate, compare, greaterThan, lessThan, equals, sort, ascending, descending, max, min } from '../src/index.js';
 import { deepEqual } from 'assert';
+import { calculate, calculateSingle, compare, greaterThan, lessThan, equals, sort, ascending, descending, max, min } from '../src/index.js';
 
 describe('CALCULATE', () => {
     describe('Examples from the spec', () => {
@@ -158,6 +158,23 @@ describe('CALCULATE', () => {
     describe('Calculate accepts an empty value', () => {
         it('"" = []', () => {
             deepEqual(calculate(''), []);
+        });
+    });
+});
+
+describe('CALCULATE (SINGLE)', () => {
+    describe('Examples from the spec', () => {
+        it('.bar = (0,1,0)', () => {
+            deepEqual(calculateSingle('.bar').toObject(), { a: 0, b: 1, c: 0 });
+        });
+        it('.bar, #baz = (0,1,0)', () => {
+            deepEqual(calculateSingle('.bar, #baz').toObject(), { a: 0, b: 1, c: 0 });
+        });
+    });
+
+    describe('Calculatesingle accepts an empty value', () => {
+        it('"" = null', () => {
+            deepEqual(calculateSingle(''), null);
         });
     });
 });

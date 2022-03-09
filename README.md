@@ -18,28 +18,41 @@ This library comes as an ES Module and exposes a `calculate` function which calc
 
 ```js
 import { calculate } from '@bramus/specificity';
-const specificity = calculate('.foo :is(.bar, #baz)');
+const specificity = calculate('.foo :is(.bar, #baz), body');
+```
+
+Because `calculate` accepts a [Selector List](https://www.w3.org/TR/selectors-4/#grouping) — which can contain more than 1 [Selector](https://www.w3.org/TR/selectors-4/#selector) — it will always return an array.
+
+```js
+import { calculate } from '@bramus/specificity';
+const specificities = calculate('#foo.bar.baz a b c, .second-selector');
+specificities.map(s => s.toString()); // [(1,2,3), (0,1,0)]
+```
+
+To calculate the specificity of a single Selector, you can use `calculateSingle`
+
+```js
+import { calculateSingle } from '@bramus/specificity';
+const specificity = calculateSingle('.foo :is(.bar, #baz)');
+specificity.toString(); // (1,1,0)
 ```
 
 ## The Return Format
 
-Because `calculate` accepts a [Selector List](https://www.w3.org/TR/selectors-4/#grouping) — which can contain more than 1 [Selector](https://www.w3.org/TR/selectors-4/#selector) — it will always return an array. Contained in the array are instances of the `Specificity` class that also comes with `@bramus/specificity`.
+A calculated specificity is represented as an instance of the `Specificity` class, which also comes with `@bramus/specificity`.
 
 The `Specificity` class includes methods to get the specificity value in a certain format, along with some convenience methods to compare it against other instances.
 
 ```js
 import { calculate } from '@bramus/specificity';
 
-// ✨ Calculate accepts a Selector List, and will therefore always return an array
+// ✨ Calculate specificity for each Selector in the given Selector List
 const specificities = calculate('#foo.bar.baz a b c, .second-selector');
-specificities.map(s => `${s}`).join('\n');
-// (1,2,3)
-// (0,1,0)
 
 // 🚚 The values in the array are instances of a Specificity class
+const specificity = specificities[0]; // Instance of Specificity
 
 // 🛠 From an instance you can get the value in various formats
-const specificity = specificities[0]; // Instance of Specificity
 specificity.value; // { a: 1, b: 2, c: 3 }
 specificity.a; // 1
 specificity.b; // 2
