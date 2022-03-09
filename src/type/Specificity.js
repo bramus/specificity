@@ -4,7 +4,7 @@ import { equals, greaterThan, lessThan } from './../util/compare.js';
 class Specificity {
     constructor(value, selector = null) {
         this.value = value;
-        this.selectorObject = selector;
+        this.selector = selector;
     }
 
     get a() {
@@ -32,7 +32,20 @@ class Specificity {
     }
 
     selectorString() {
-        return this.selectorObject ? generate(this.selectorObject) : null;
+        // this.selector already is a String
+        if (typeof this.selector === 'string' || this.selector instanceof String) {
+            return this.selector;
+        }
+
+        // this.selector is a Selector as parsed by CSSTree
+        if (this.selector instanceof Object) {
+            if (this.selector.type === 'Selector') {
+                return generate(this.selector);
+            }
+        }
+
+        // this.selector is something else …
+        return '';
     }
 
     toObject() {
