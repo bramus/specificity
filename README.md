@@ -30,7 +30,7 @@ The `Specificity` class includes methods to get the specificity value in a certa
 ```js
 import { calculate } from '@bramus/specificity';
 
-// ✨ Calculate accepts a Selectors List, and will therefore always return an array
+// ✨ Calculate accepts a Selector List, and will therefore always return an array
 const specificities = calculate('#foo.bar.baz a b c, .second-selector');
 specificities.map(s => `${s}`).join('\n');
 // (1,2,3)
