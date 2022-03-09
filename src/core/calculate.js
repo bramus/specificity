@@ -37,8 +37,7 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                     case 'not':
                     case 'has':
                         // Calculate Specificity from nested SelectorList
-                        // @note Manually parsing subtree when the child is of the type Raw, due to https://github.com/csstree/csstree/issues/151
-                        const max1 = max(calculate(child.children.first.type == 'Raw' ? parse(child.children.first.value, { context: 'selectorList' }) : child.children.first));
+                        const max1 = max(calculate(child.children.first));
 
                         // Adjust orig specificity
                         specificity.a += max1.a;
@@ -132,6 +131,17 @@ const convertToAST = (source, type) => {
     if (source instanceof Object) {
         if (source.type && source.type === type) {
             return source;
+        }
+
+        // Manually parsing subtree when the child is of the type Raw, most likely due to https://github.com/csstree/csstree/issues/151
+        if (source.type && source.type === 'Raw') {
+            try {
+                return parse(source.value, {
+                    context: typesToContextMap[typesToContextMap],
+                });
+            } catch (e) {
+                throw new TypeError(`Could not convert passed in source to ${type}: ${e.message}`);
+            }
         }
 
         throw new TypeError(`Passed in source is an Object but no AST / AST of the type ${type}`);
