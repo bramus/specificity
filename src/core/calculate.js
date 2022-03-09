@@ -151,6 +151,11 @@ const convertToAST = (source, type) => {
 };
 
 const calculate = (selector) => {
+    // Quit while you're ahead
+    if (!selector) {
+        return [];
+    }
+
     // Make sure we have a SelectorList AST
     // If not, an exception will be thrown
     const ast = convertToAST(selector, 'SelectorList');

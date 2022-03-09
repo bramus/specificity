@@ -1,5 +1,5 @@
-import { equal, deepEqual } from 'assert';
 import { calculate, compare, greaterThan, lessThan, equals, sort, ascending, descending, max, min } from '../src/index.js';
+import { deepEqual } from 'assert';
 
 describe('CALCULATE', () => {
     describe('Examples from the spec', () => {
@@ -152,6 +152,12 @@ describe('CALCULATE', () => {
         it('foo, .bar = [(0,0,1),(0,1,0)]', () => {
             deepEqual(calculate('foo, .bar')[0].toObject(), { a: 0, b: 0, c: 1 });
             deepEqual(calculate('foo, .bar')[1].toObject(), { a: 0, b: 1, c: 0 });
+        });
+    });
+
+    describe('Calculate accepts an empty value', () => {
+        it('"" = []', () => {
+            deepEqual(calculate(''), []);
         });
     });
 });
