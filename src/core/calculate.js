@@ -104,36 +104,46 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
     return new Specificity(specificity, selectorObj);
 };
 
-const convertSelectorToSelectorListObject = (selectorOrAST) => {
+const convertToAST = (source, type) => {
+    const typesToContextMap = {
+        SelectorList: 'selectorList',
+        Selector: 'selector',
+    };
+
+    // We won't support the passed in type
+    if (!typesToContextMap[type]) {
+        throw new TypeError(`Invalid value for argument type: ${type} is not supported.`);
+    }
+
     // The passed in argument was a String.
     // ~> Let's try and parse to an AST
-    if (typeof selectorOrAST === 'string' || selectorOrAST instanceof String) {
+    if (typeof source === 'string' || source instanceof String) {
         try {
-            return parse(selectorOrAST, {
-                context: 'selectorList',
+            return parse(source, {
+                context: typesToContextMap[typesToContextMap],
             });
         } catch (e) {
-            throw new TypeError(`Could not convert passed in selector to SelectorList: ${e.message}`);
+            throw new TypeError(`Could not convert passed in source to ${type}: ${e.message}`);
         }
     }
 
     // The passed in argument was an Object.
-    // ~> Let's verify if it's a SelectorList
-    if (selectorOrAST instanceof Object) {
-        if (!selectorOrAST.type || selectorOrAST.type !== 'SelectorList') {
-            throw new TypeError(`Passed in selector is an Object but no SelectorList`);
+    // ~> Let's verify if it's a AST of the type ${type}
+    if (source instanceof Object) {
+        if (source.type && source.type === type) {
+            return source;
         }
 
-        return selectorOrAST;
+        throw new TypeError(`Passed in source is an Object but no AST / AST of the type ${type}`);
     }
 
-    throw new TypeError(`Passed in selector is not a String nor an Object. I don't know what to do with it`);
+    throw new TypeError(`Passed in source is not a String nor an Object. I don't know what to do with it.`);
 };
 
 const calculate = (selector) => {
-    // Make sure we have a SelectorList Object
+    // Make sure we have a SelectorList AST
     // If not, an exception will be thrown
-    const ast = convertSelectorToSelectorListObject(selector);
+    const ast = convertToAST(selector, 'SelectorList');
 
     // Calculate Specificity for each contained Selector
     const specificities = [];
