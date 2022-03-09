@@ -2,7 +2,7 @@ import { deepEqual } from 'assert';
 import { calculate, Specificity } from '../src/index.js';
 
 describe('Specificity Class, manual instance', () => {
-    const s = new Specificity({a: 1, b: 2, c: 3 }, '#foo.bar.baz a b c');
+    const s = new Specificity({ a: 1, b: 2, c: 3 }, '#foo.bar.baz a b c');
 
     describe('Instance Getters', () => {
         it('Specificity.value', () => {
@@ -43,7 +43,7 @@ describe('Specificity Class, manual instance', () => {
 });
 
 describe('Specificity Class, manual instance, no given selector', () => {
-    const s = new Specificity({a: 1, b: 2, c: 3 });
+    const s = new Specificity({ a: 1, b: 2, c: 3 });
 
     describe('Instance Getters', () => {
         it('Specificity.value', () => {
