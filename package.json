@@ -33,6 +33,7 @@
     "src",
     "dist"
   ],
+  "types": "./index.d.ts",
   "scripts": {
     "build-esm": "esbuild --bundle ./src/index.js --outfile=./dist/index.js --format=esm --sourcemap --minify",
     "build-cjs": "esbuild --bundle ./src/index.js --outfile=./dist/index.cjs --format=cjs --sourcemap --minify",
