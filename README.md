@@ -18,7 +18,7 @@ This library comes as an ES Module and exposes a `calculate` function which calc
 
 ```js
 import { calculate } from '@bramus/specificity';
-const specificity = calculate('.foo :is(.bar, #baz), body');
+const specificities = calculate('.foo :is(.bar, #baz), body');
 ```
 
 Because `calculate` accepts a [Selector List](https://www.w3.org/TR/selectors-4/#grouping) — which can contain more than 1 [Selector](https://www.w3.org/TR/selectors-4/#selector) — it will always return an array.
@@ -29,11 +29,11 @@ const specificities = calculate('#foo.bar.baz a b c, .second-selector');
 specificities.map(s => s.toString()); // ["(1,2,3)","(0,1,0)"]
 ```
 
-To calculate the specificity of a single Selector, you can use `calculateSingle`
+If you know you’re passing only a single Selector into `calculate()`, you can use JavaScript’s built-in destructuring to keep your variable names clean.
 
 ```js
-import { calculateSingle } from '@bramus/specificity';
-const specificity = calculateSingle('.foo :is(.bar, #baz)');
+import { calculate } from '@bramus/specificity';
+const [specificity] = calculate('.foo :is(.bar, #baz)');
 specificity.toString(); // "(1,1,0)"
 ```
 

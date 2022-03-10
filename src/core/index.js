@@ -1,1 +1,1 @@
-export { calculate, calculateSingle } from './calculate.js';
+export { calculate } from './calculate.js';
