@@ -30,11 +30,15 @@
   "unpkg": "./dist/index.js",
   "jsdelivr": "./dist/index.js",
   "files": [
+    "bin",
     "src",
     "dist",
     "index.d.ts"
   ],
   "types": "./index.d.ts",
+  "bin": {
+    "specificity": "./bin/cli.js"
+  },
   "scripts": {
     "build-esm": "esbuild --bundle ./src/index.js --outfile=./dist/index.js --format=esm --sourcemap --minify",
     "build-cjs": "esbuild --bundle ./src/index.js --outfile=./dist/index.cjs --format=cjs --sourcemap --minify",
