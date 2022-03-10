@@ -31,7 +31,8 @@
   "jsdelivr": "./dist/index.js",
   "files": [
     "src",
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
   "types": "./index.d.ts",
   "scripts": {
