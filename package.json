@@ -54,7 +54,7 @@
     "beta-version-major": "npm version $(semver $npm_package_version -i premajor --preid beta)",
     "rc-version": "npm version $(semver $npm_package_version -i prerelease --preid rc)",
     "final-release": "npm version $(semver $npm_package_version -i)",
-    "preversion": "npm run prevent-dirty-tree",
+    "preversion": "npm run prevent-dirty-tree && npm run test",
     "prevent-dirty-tree": "exit $(git status --porcelain | wc -l)"
   },
   "repository": {
