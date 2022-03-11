@@ -136,10 +136,10 @@ describe('Specificity Class', () => {
             deepEqual(s.isLessThan(sHigh), true);
             deepEqual(s.isLessThan(sLow), false);
         });
-        it('Specificity.equals()', () => {
-            deepEqual(s.equals(s), true);
-            deepEqual(s.equals(sHigh), false);
-            deepEqual(s.equals(sLow), false);
+        it('Specificity.isEqualTo()', () => {
+            deepEqual(s.isEqualTo(s), true);
+            deepEqual(s.isEqualTo(sHigh), false);
+            deepEqual(s.isEqualTo(sLow), false);
         });
     });
 });

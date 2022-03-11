@@ -74,7 +74,7 @@ console.log(JSON.stringify(specificity));
 // }
 
 // 🔀 Need to compare against another instance? That's possible!
-specificity.equals(specificities[1])); // false
+specificity.isEqualTo(specificities[1])); // false
 specificity.isGreaterThan(specificities[1])); // true
 specificity.isLessThan(specificities[1])); // false
 ```

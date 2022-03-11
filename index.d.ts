@@ -22,7 +22,7 @@ export class Specificity {
         asArray: SpecificityArray;
         asString: string;
     };
-    equals(otherSpecificity: SpecificityInstanceOrObject): boolean;
+    isEqualTo(otherSpecificity: SpecificityInstanceOrObject): boolean;
     isGreaterThan(otherSpecificity: SpecificityInstanceOrObject): boolean;
     isLessThan(otherSpecificity: SpecificityInstanceOrObject): boolean;
 }
