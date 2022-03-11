@@ -69,7 +69,7 @@ class Specificity {
         };
     }
 
-    equals(otherSpecificity) {
+    isEqualTo(otherSpecificity) {
         return equals(this, otherSpecificity);
     }
 
