@@ -45,6 +45,7 @@
     "lint": "prettier --check '{src,test}/**/*.{ts,tsx,js,jsx}'",
     "prettier": "prettier --write '{src,test}/**/*.{ts,tsx,js,jsx}'",
     "build": "npm run build-esm && npm run build-cjs",
+    "prepack": "npm run prevent-dirty-tree",
     "prepublish": "npm run build",
     "pretest": "npm run build",
     "test": "mocha",
@@ -52,7 +53,9 @@
     "beta-version-minor": "npm version $(semver $npm_package_version -i preminor --preid beta)",
     "beta-version-major": "npm version $(semver $npm_package_version -i premajor --preid beta)",
     "rc-version": "npm version $(semver $npm_package_version -i prerelease --preid rc)",
-    "final-release": "npm version $(semver $npm_package_version -i)"
+    "final-release": "npm version $(semver $npm_package_version -i)",
+    "preversion": "npm run prevent-dirty-tree",
+    "prevent-dirty-tree": "exit $(git status --porcelain | wc -l)"
   },
   "repository": {
     "type": "git",
