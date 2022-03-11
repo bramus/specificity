@@ -18,23 +18,23 @@ This library comes as an ES Module and exposes a `calculate` function which calc
 
 ```js
 import { calculate } from '@bramus/specificity';
-const specificities = calculate('.foo :is(.bar, #baz), body');
+const specificities = calculate('header:where(#top) nav li:nth-child(2n + 1), #doormat');
 ```
 
 Because `calculate` accepts a [Selector List](https://www.w3.org/TR/selectors-4/#grouping) — which can contain more than 1 [Selector](https://www.w3.org/TR/selectors-4/#selector) — it will always return an array.
 
 ```js
 import { calculate } from '@bramus/specificity';
-const specificities = calculate('#foo.bar.baz a b c, .second-selector');
-specificities.map(s => s.toString()); // ["(1,2,3)","(0,1,0)"]
+const specificities = calculate('header:where(#top) nav li:nth-child(2n + 1), #doormat');
+specificities.map(s => s.toString()); // ["(0,1,3)","(1,0,0)"]
 ```
 
 If you know you’re passing only a single Selector into `calculate()`, you can use JavaScript’s built-in destructuring to keep your variable names clean.
 
 ```js
 import { calculate } from '@bramus/specificity';
-const [specificity] = calculate('.foo :is(.bar, #baz)');
-specificity.toString(); // "(1,1,0)"
+const [specificity] = calculate('header:where(#top) nav li:nth-child(2n + 1)');
+specificity.toString(); // "(0,1,3)"
 ```
 
 ## The Return Format
@@ -47,36 +47,36 @@ The `Specificity` class includes methods to get the specificity value in a certa
 import { calculate } from '@bramus/specificity';
 
 // ✨ Calculate specificity for each Selector in the given Selector List
-const specificities = calculate('#foo.bar.baz a b c, .second-selector');
+const specificities = calculate('header:where(#top) nav li:nth-child(2n + 1), #doormat');
 
 // 🚚 The values in the array are instances of a Specificity class
 const specificity = specificities[0]; // Instance of Specificity
 
 // 🛠 From an instance you can get the value in various formats
-specificity.value; // { a: 1, b: 2, c: 3 }
-specificity.a; // 1
-specificity.b; // 2
+specificity.value; // { a: 0, b: 1, c: 3 }
+specificity.a; // 0
+specificity.b; // 1
 specificity.c; // 3
-specificity.toString(); // "(1,2,3)"
-specificity.toArray(); // [1, 2, 3]
-specificity.toObject(); // { a: 1, b: 2, c: 3 }
+specificity.toString(); // "(0,1,3)"
+specificity.toArray(); // [0, 1, 3]
+specificity.toObject(); // { a: 0, b: 1, c: 3 }
 
 // 💡 From an instance you can also get the selector (as a String)
-specificity.selectorString(); // "#foo.bar.baz a b c"
+specificity.selectorString(); // "header:where(#top) nav li:nth-child(2n + 1)"
 
 // 💻 These instances also play nice with JSON.stringify()
 console.log(JSON.stringify(specificity));
 // {
-//    "selector": '#foo.bar.baz a b c',
-//    "asObject": { "a": 1, "b": 2, "c": 3 },
-//    "asArray": [1, 2, 3],
-//    "asString": "(1,2,3)",
+//    "selector": 'header:where(#top) nav li:nth-child(2n + 1)',
+//    "asObject": { "a": 0, "b": 1, "c": 3 },
+//    "asArray": [0, 1, 3],
+//    "asString": "(0,1,3)",
 // }
 
 // 🔀 Need to compare against another instance? That's possible!
 specificity.isEqualTo(specificities[1])); // false
-specificity.isGreaterThan(specificities[1])); // true
-specificity.isLessThan(specificities[1])); // false
+specificity.isGreaterThan(specificities[1])); // false
+specificity.isLessThan(specificities[1])); // true
 ```
 ## Helper Functions
 
