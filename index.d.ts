@@ -3,7 +3,7 @@ export type SpecificityArray = [number, number, number];
 export type SpecificityObject = { a: number; b: number; c: number };
 
 export class Specificity {
-    constructor(value: string, selector?: any);
+    constructor(value: SpecificityObject, selector?: any);
     value: SpecificityObject;
     selector: string | Object;
     set a(arg: number);
