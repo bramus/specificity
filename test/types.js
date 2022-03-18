@@ -142,4 +142,16 @@ describe('Specificity Class', () => {
             deepEqual(s.isEqualTo(sLow), false);
         });
     });
+
+    describe('Static Instance Methods', () => {
+        const sHigh = calculate('#foo#bar.baz a b c')[0];
+        const sLow = calculate('#foo.baz a b c')[0];
+
+        it('Specificity.min', () => {
+            deepEqual(Specificity.min(sHigh, sLow), sLow);
+        });
+        it('Specificity.max', () => {
+            deepEqual(Specificity.max(sHigh, sLow), sHigh);
+        });
+    });
 });

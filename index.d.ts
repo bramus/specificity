@@ -3,6 +3,13 @@ export type SpecificityArray = [number, number, number];
 export type SpecificityObject = { a: number; b: number; c: number };
 
 export class Specificity {
+    static equals(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): boolean;
+    static lessThan(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): boolean;
+    static greaterThan(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): boolean;
+    static min(...specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject;
+    static max(...specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject;
+    static ascending(...specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject;
+    static descending(...specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject;
     constructor(value: SpecificityObject, selector?: any);
     value: SpecificityObject;
     selector: string | CSSTreeAST;

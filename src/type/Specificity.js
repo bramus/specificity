@@ -1,5 +1,7 @@
 import generate from 'css-tree/generator';
 import { equals, greaterThan, lessThan } from './../util/compare.js';
+import { min, max } from './../util/filter.js';
+import { ascending, descending } from './../util/sort.js';
 
 class Specificity {
     constructor(value, selector = null) {
@@ -79,6 +81,34 @@ class Specificity {
 
     isLessThan(otherSpecificity) {
         return lessThan(this, otherSpecificity);
+    }
+
+    static equals(s1, s2) {
+        return equals(s1, s2);
+    }
+
+    static lessThan(s1, s2) {
+        return lessThan(s1, s2);
+    }
+
+    static greaterThan(s1, s2) {
+        return greaterThan(s1, s2);
+    }
+
+    static min(...specificities) {
+        return min(specificities);
+    }
+
+    static max(...specificities) {
+        return max(specificities);
+    }
+
+    static ascending(...specificities) {
+        return ascending(specificities);
+    }
+
+    static descending(...specificities) {
+        return descending(specificities);
     }
 }
 
