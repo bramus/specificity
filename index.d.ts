@@ -5,7 +5,7 @@ export type SpecificityObject = { a: number; b: number; c: number };
 export class Specificity {
     constructor(value: SpecificityObject, selector?: any);
     value: SpecificityObject;
-    selector: string | Object;
+    selector: string | CSSTreeAST;
     set a(arg: number);
     get a(): number;
     set b(arg: number);
@@ -28,9 +28,10 @@ export class Specificity {
 }
 
 type SpecificityInstanceOrObject = Specificity | SpecificityObject;
+type CSSTreeAST = Object; // @TODO: Define shape
 
 // CORE
-export function calculate(selector: string): Array<Specificity>; // @TODO: A CSSTree AST is also accepted …
+export function calculate(selector: string | CSSTreeAST): Array<Specificity>;
 
 // UTIL: COMPARE
 export function equals(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): boolean;
@@ -39,10 +40,10 @@ export function lessThan(s1: SpecificityInstanceOrObject, s2: SpecificityInstanc
 export function compare(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): number;
 
 // UTIL: FILTER
-export function min(specificities: Array<SpecificityInstanceOrObject>): SpecificityInstanceOrObject;
-export function max(specificities: Array<SpecificityInstanceOrObject>): SpecificityInstanceOrObject;
+export function min(specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject;
+export function max(specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject;
 
 // UTIL: SORT
-export function ascending(specificities: Array<SpecificityInstanceOrObject>): Array<SpecificityInstanceOrObject>;
-export function descending(specificities: Array<SpecificityInstanceOrObject>): Array<SpecificityInstanceOrObject>;
-export function sort(specificities: Array<SpecificityInstanceOrObject>, order?: 'ASC' | 'DESC'): Array<SpecificityInstanceOrObject>;
+export function ascending(specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject[];
+export function descending(specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject[];
+export function sort(specificities: SpecificityInstanceOrObject[], order?: 'ASC' | 'DESC'): SpecificityInstanceOrObject[];
