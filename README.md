@@ -125,6 +125,20 @@ import { min, max } from '@bramus/specificity/filter';
 import { sortAsc, sortDesc } from '@bramus/specificity/sort';
 ```
 
+## Type Definitions
+
+Although `@bramus/specificity` comes is written in Vanilla JavaScript, it does include [Type Definitions](https://www.typescriptlang.org/docs/handbook/2/type-declarations.html) which are exposed via its `package.json`.
+
+## Binary/CLI
+
+`@bramus/specificity` exposes a binary named `specificity` to calculate the specificity of a given selector list on the CLI. For each selector that it finds, it'll print out the calculated specificity as a string on a new line.
+
+```bash
+$ specificity "header:where(#top) nav li:nth-child(2n), #doormat"
+(0,1,3)
+(1,0,0)
+```
+
 ## License
 
 `@bramus/specificity` is released under the MIT public license. See the enclosed `LICENSE` for details.
