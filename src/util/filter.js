@@ -1,12 +1,12 @@
-import { ascending, descending } from './sort.js';
+import { sortAsc, sortDesc } from './sort.js';
 
-const max = (specificities) => {
-    const sorted = descending(specificities);
+const max = (...specificities) => {
+    const sorted = sortDesc(...specificities);
     return sorted[0];
 };
 
-const min = (specificities) => {
-    const sorted = ascending(specificities);
+const min = (...specificities) => {
+    const sorted = sortAsc(...specificities);
     return sorted[0];
 };
 

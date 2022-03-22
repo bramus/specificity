@@ -1,4 +1,4 @@
-import compare from './compare.js';
+import { compare } from './compare.js';
 
 const sort = (specificities, order = 'ASC') => {
     const sorted = specificities.sort(compare);
@@ -10,13 +10,12 @@ const sort = (specificities, order = 'ASC') => {
     return sorted;
 };
 
-const ascending = (specificities) => {
+const sortAsc = (...specificities) => {
     return sort(specificities, 'ASC');
 };
 
-const descending = (specificities) => {
+const sortDesc = (...specificities) => {
     return sort(specificities, 'DESC');
 };
 
-export { ascending, descending };
-export default sort;
+export { sortAsc, sortDesc };

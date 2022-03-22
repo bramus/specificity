@@ -1,5 +1,5 @@
 import { deepEqual } from 'assert';
-import { calculate, Specificity } from '../src/index.js';
+import Specificity from '../dist/index.js';
 
 describe('Specificity Class, manual instance', () => {
     const s = new Specificity({ a: 1, b: 2, c: 3 }, '#foo.bar.baz a b c');
@@ -84,7 +84,7 @@ describe('Specificity Class, manual instance, no given selector', () => {
 });
 
 describe('Specificity Class', () => {
-    const s = calculate('#foo.bar.baz a b c')[0];
+    const s = Specificity.calculate('#foo.bar.baz a b c')[0];
 
     describe('Instance Getters', () => {
         it('Specificity.value', () => {
@@ -123,8 +123,8 @@ describe('Specificity Class', () => {
         });
     });
     describe('Instance Comparison Methods', () => {
-        const sHigh = calculate('#foo#bar.baz a b c')[0];
-        const sLow = calculate('#foo.baz a b c')[0];
+        const sHigh = Specificity.calculate('#foo#bar.baz a b c')[0];
+        const sLow = Specificity.calculate('#foo.baz a b c')[0];
 
         it('Specificity.isGreaterThan()', () => {
             deepEqual(s.isGreaterThan(s), false);
@@ -144,8 +144,8 @@ describe('Specificity Class', () => {
     });
 
     describe('Static Instance Methods', () => {
-        const sHigh = calculate('#foo#bar.baz a b c')[0];
-        const sLow = calculate('#foo.baz a b c')[0];
+        const sHigh = Specificity.calculate('#foo#bar.baz a b c')[0];
+        const sLow = Specificity.calculate('#foo.baz a b c')[0];
 
         it('Specificity.min', () => {
             deepEqual(Specificity.min(sHigh, sLow), sLow);

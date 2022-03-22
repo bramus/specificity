@@ -3,13 +3,15 @@ export type SpecificityArray = [number, number, number];
 export type SpecificityObject = { a: number; b: number; c: number };
 
 export class Specificity {
+    static calculate(selector: string | CSSTreeAST): Array<Specificity>;
+    static compare(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): number;
     static equals(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): boolean;
     static lessThan(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): boolean;
     static greaterThan(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): boolean;
     static min(...specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject;
     static max(...specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject;
-    static ascending(...specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject;
-    static descending(...specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject;
+    static sortAsc(...specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject;
+    static sortDesc(...specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject;
     constructor(value: SpecificityObject, selector?: any);
     value: SpecificityObject;
     selector: string | CSSTreeAST;
@@ -51,6 +53,5 @@ export function min(specificities: SpecificityInstanceOrObject[]): SpecificityIn
 export function max(specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject;
 
 // UTIL: SORT
-export function ascending(specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject[];
-export function descending(specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject[];
-export function sort(specificities: SpecificityInstanceOrObject[], order?: 'ASC' | 'DESC'): SpecificityInstanceOrObject[];
+export function sortAsc(specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject[];
+export function sortDesc(specificities: SpecificityInstanceOrObject[]): SpecificityInstanceOrObject[];

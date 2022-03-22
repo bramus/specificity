@@ -20,5 +20,4 @@ const lessThan = (s1, s2) => {
     return compare(s1, s2) < 0;
 };
 
-export { equals, greaterThan, lessThan };
-export default compare;
+export { compare, equals, greaterThan, lessThan };

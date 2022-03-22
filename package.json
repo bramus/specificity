@@ -11,8 +11,8 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./types": {
-      "import": "./src/type/index.js"
+    "./core": {
+      "import": "./src/core/index.js"
     },
     "./util": {
       "import": "./src/util/index.js"

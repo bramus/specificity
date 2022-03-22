@@ -1,5 +1,5 @@
 import parse from 'css-tree/selector-parser';
-import { Specificity } from './../type/index.js';
+import Specificity from '../index.js';
 import { max } from './../util/index.js';
 
 const calculateSpecificityOfSelectorObject = (selectorObj) => {
@@ -37,7 +37,7 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                     case 'not':
                     case 'has':
                         // Calculate Specificity from nested SelectorList
-                        const max1 = max(calculate(child.children.first));
+                        const max1 = max(...calculate(child.children.first));
 
                         // Adjust orig specificity
                         specificity.a += max1.a;
@@ -53,7 +53,7 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
 
                         if (child.children.first.selector) {
                             // Calculate Specificity from SelectorList
-                            const max2 = max(calculate(child.children.first.selector));
+                            const max2 = max(...calculate(child.children.first.selector));
 
                             // Adjust orig specificity
                             specificity.a += max2.a;

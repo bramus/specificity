@@ -4,7 +4,7 @@
 
 Package to calculate the Specificity of CSS Selectors. Also includes some convenience functions to compare, sort, and filter an array of specificity values.
 
-Supports [Selectors Level 4](https://www.w3.org/TR/selectors-4/), including those special cases `:is()`, `:where()`, `:not()`, etc. 
+Supports [Selectors Level 4](https://www.w3.org/TR/selectors-4/), including those special cases `:is()`, `:where()`, `:not()`, etc.
 
 ## Installation
 
@@ -17,23 +17,23 @@ npm i @bramus/specificity
 This library comes as an ES Module and exposes a `calculate` function which calculates the specificity of a given CSS SelectorList.
 
 ```js
-import { calculate } from '@bramus/specificity';
-const specificities = calculate('header:where(#top) nav li:nth-child(2n + 1), #doormat');
+import Specificity from '@bramus/specificity';
+const specificities = Specificity.calculate('header:where(#top) nav li:nth-child(2n + 1), #doormat');
 ```
 
 Because `calculate` accepts a [Selector List](https://www.w3.org/TR/selectors-4/#grouping) — which can contain more than 1 [Selector](https://www.w3.org/TR/selectors-4/#selector) — it will always return an array.
 
 ```js
-import { calculate } from '@bramus/specificity';
-const specificities = calculate('header:where(#top) nav li:nth-child(2n + 1), #doormat');
-specificities.map(s => s.toString()); // ["(0,1,3)","(1,0,0)"]
+import Specificity from '@bramus/specificity';
+const specificities = Specificity.calculate('header:where(#top) nav li:nth-child(2n + 1), #doormat');
+specificities.map((s) => s.toString()); // ["(0,1,3)","(1,0,0)"]
 ```
 
 If you know you’re passing only a single Selector into `calculate()`, you can use JavaScript’s built-in destructuring to keep your variable names clean.
 
 ```js
-import { calculate } from '@bramus/specificity';
-const [specificity] = calculate('header:where(#top) nav li:nth-child(2n + 1)');
+import Specificity from '@bramus/specificity';
+const [specificity] = Specificity.calculate('header:where(#top) nav li:nth-child(2n + 1)');
 specificity.toString(); // "(0,1,3)"
 ```
 
@@ -44,10 +44,10 @@ A calculated specificity is represented as an instance of the `Specificity` clas
 The `Specificity` class includes methods to get the specificity value in a certain format, along with some convenience methods to compare it against other instances.
 
 ```js
-import { calculate } from '@bramus/specificity';
+import Specificity from '@bramus/specificity';
 
 // ✨ Calculate specificity for each Selector in the given Selector List
-const specificities = calculate('header:where(#top) nav li:nth-child(2n + 1), #doormat');
+const specificities = Specificity.calculate('header:where(#top) nav li:nth-child(2n + 1), #doormat');
 
 // 🚚 The values in the array are instances of a Specificity class
 const specificity = specificities[0]; // Instance of Specificity
@@ -78,44 +78,47 @@ specificity.isEqualTo(specificities[1])); // false
 specificity.isGreaterThan(specificities[1])); // false
 specificity.isLessThan(specificities[1])); // true
 ```
-## Helper Functions
 
-This package also exposes some convenience functions to work with an array specificities:
+## Static Specificity Functions
 
-- Comparison functions:
-    - `compare(s1, s2)`: Compares s1 to s2. Returns a value that can be:
-        - `> 0` = Sort s2 before s1 _(i.e. s2 is less specific than s1)_
-        - `0` = Keep original order of s1 and s2 _(i.e. s2 and s1 are equally specific)_
-        - `< 0` = Sort s1 before s2 _(i.e. s1 is more specific than s2)_
-    - `equals(s1, s2)`: Returns `true` if s1 and s2 have the same specificity. If not, `false` is returned.
-    - `greaterThan(s1, s2)`: Returns `true` if s1 has a higher specificity than s2. If not, `false` is returned.
-    - `lessThan(s1, s2)`: Returns `true` if s1 has a lower specificity than s2. If not, `false` is returned.
+This package also exposes some utility functions to work with specificities. These are all exposed as static functions on the Specificity class.
 
-- Sorting functions:
-    - `ascending(specificities)`: Sorts the array of given specificities in ascending order _(low specificity to high specificity)_
-    - `descending(specificities)`: Sorts the array of given specificities in descending order _(high specificity to low specificity)_
-    - `sort(specificities, order = 'ASC')`: Sorts the array of given specificities in the give order (`'ASC'` or `'DESC'`)
+-   Comparison functions:
 
-- Filter functions:
-    - `min(specificities)`: Filters out the value with the lowest specificity
-    - `max(specificities)`: Filters out the value with the highest specificity
+    -   `Specificity.compare(s1, s2)`: Compares s1 to s2. Returns a value that can be:
+        -   `> 0` = Sort s2 before s1 _(i.e. s1 is more specific than s2)_
+        -   `0` = Keep original order of s1 and s2 _(i.e. s1 and s2 are equally specific)_
+        -   `< 0` = Sort s1 before s2 _(i.e. s1 is less specific than s2)_
+    -   `Specificity.equals(s1, s2)`: Returns `true` if s1 and s2 have the same specificity. If not, `false` is returned.
+    -   `Specificity.greaterThan(s1, s2)`: Returns `true` if s1 has a higher specificity than s2. If not, `false` is returned.
+    -   `Specificity.lessThan(s1, s2)`: Returns `true` if s1 has a lower specificity than s2. If not, `false` is returned.
+
+-   Sorting functions:
+
+    -   `Specificity.sortAsc(s1, s2, …, sN)`: Sorts the given specificities in ascending order _(low specificity to high specificity)_
+    -   `Specificity.sortDesc(s1, s2, …, sN)`: Sorts the given specificities in descending order _(high specificity to low specificity)_
+
+-   Filter functions:
+    -   `Specificity.min(s1, s2, …, sN)`: Filters out the value with the lowest specificity
+    -   `Specificity.max(s1, s2, …, sN)`: Filters out the value with the highest specificity
 
 A specificity passed into any of these utility functions can be any of:
 
-- An instance of the included `Specificity` class
-- A simple Object such as `{'a': 1, 'b': 0, 'c': 2}`
+-   An instance of the included `Specificity` class
+-   A simple Object such as `{'a': 1, 'b': 0, 'c': 2}`
 
-All these functions are exported from the main `index.js` entrypoint, in addition to the `calculate` function.
+## Standalone Utility Functions
+
+All static functions the Specificity class contains are also exported from as standalone functions using [Subpath Exports](https://nodejs.org/api/packages.html#subpath-exports).
+
+If you're only interested in including some of these functions into your project you can import them from their Subpath. As a result, your bundle size will be reduced greatly _(except for including the standalone `calculate`, as it returns an array of Specificity instances that relies on the whole lot)_
 
 ```js
-import {
-    compare, equals, greaterThan, lessThan,
-    ascending, descending, sort,
-    min, max
-} from '@bramus/specificity'
+import { calculate } from '@bramus/specificity/core';
+import { compare, equals, greaterThan, lessThan } from '@bramus/specificity/compare';
+import { min, max } from '@bramus/specificity/filter';
+import { sortAsc, sortDesc } from '@bramus/specificity/sort';
 ```
-
-💡 If you're only interested in including these helper functions into your project — without `calculate` — you can import them from `@bramus/specificity/util`. As a result, your bundle size will be reduced greatly.
 
 ## License
 
