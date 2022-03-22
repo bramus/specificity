@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { calculate } from '../dist/index.js';
+import Specificity from '../dist/index.js';
 
 if (!process.argv[2]) {
     console.error('❌ Missing selector argument');
@@ -7,7 +7,7 @@ if (!process.argv[2]) {
 }
 
 try {
-    const specificities = calculate(process.argv[2]);
+    const specificities = Specificity.calculate(process.argv[2]);
     console.log(specificities.map((specificity) => `${specificity}`).join('\n'));
 } catch (e) {
     console.error(`❌ ${e.message}`);
