@@ -18,38 +18,43 @@ This library comes as an ES Module and exposes a `calculate` function which calc
 
 ```js
 import Specificity from '@bramus/specificity';
-const specificities = Specificity.calculate('header:where(#top) nav li:nth-child(2n + 1), #doormat');
+
+const specificities = Specificity.calculate('header:where(#top) nav li:nth-child(2n), #doormat');
 ```
 
 Because `calculate` accepts a [Selector List](https://www.w3.org/TR/selectors-4/#grouping) — which can contain more than 1 [Selector](https://www.w3.org/TR/selectors-4/#selector) — it will always return an array.
 
 ```js
 import Specificity from '@bramus/specificity';
-const specificities = Specificity.calculate('header:where(#top) nav li:nth-child(2n + 1), #doormat');
-specificities.map((s) => s.toString()); // ["(0,1,3)","(1,0,0)"]
+
+const specificities = Specificity.calculate('header:where(#top) nav li:nth-child(2n), #doormat');
+
+specificities.map((s) => s.toString());
+// ~> ["(0,1,3)","(1,0,0)"]
 ```
 
 If you know you’re passing only a single Selector into `calculate()`, you can use JavaScript’s built-in destructuring to keep your variable names clean.
 
 ```js
 import Specificity from '@bramus/specificity';
-const [specificity] = Specificity.calculate('header:where(#top) nav li:nth-child(2n + 1)');
-specificity.toString(); // "(0,1,3)"
+
+const [specificity] = Specificity.calculate('header:where(#top) nav li:nth-child(2n)');
+
+specificity.toString();
+// ~> "(0,1,3)"
 ```
 
 ## The Return Format
 
-A calculated specificity is represented as an instance of the `Specificity` class, which also comes with `@bramus/specificity`.
-
-The `Specificity` class includes methods to get the specificity value in a certain format, along with some convenience methods to compare it against other instances.
+A calculated specificity is represented as an instance of the `Specificity` class. The `Specificity` class includes methods to get the specificity value in a certain format, along with some convenience methods to compare it against other instances.
 
 ```js
 import Specificity from '@bramus/specificity';
 
 // ✨ Calculate specificity for each Selector in the given Selector List
-const specificities = Specificity.calculate('header:where(#top) nav li:nth-child(2n + 1), #doormat');
+const specificities = Specificity.calculate('header:where(#top) nav li:nth-child(2n), #doormat');
 
-// 🚚 The values in the array are instances of a Specificity class
+// 🚚 The values in the array are instances of the Specificity class
 const specificity = specificities[0]; // Instance of Specificity
 
 // 🛠 From an instance you can get the value in various formats
@@ -62,12 +67,12 @@ specificity.toArray(); // [0, 1, 3]
 specificity.toObject(); // { a: 0, b: 1, c: 3 }
 
 // 💡 From an instance you can also get the selector (as a String)
-specificity.selectorString(); // "header:where(#top) nav li:nth-child(2n + 1)"
+specificity.selectorString(); // "header:where(#top) nav li:nth-child(2n)"
 
 // 💻 These instances also play nice with JSON.stringify()
 console.log(JSON.stringify(specificity));
 // {
-//    "selector": 'header:where(#top) nav li:nth-child(2n + 1)',
+//    "selector": 'header:where(#top) nav li:nth-child(2n)',
 //    "asObject": { "a": 0, "b": 1, "c": 3 },
 //    "asArray": [0, 1, 3],
 //    "asString": "(0,1,3)",
@@ -79,9 +84,9 @@ specificity.isGreaterThan(specificities[1])); // false
 specificity.isLessThan(specificities[1])); // true
 ```
 
-## Static Specificity Functions
+## Static Functions
 
-This package also exposes some utility functions to work with specificities. These are all exposed as static functions on the Specificity class.
+This package also exposes some utility functions to work with specificities. These are all exposed as static functions on the `Specificity` class.
 
 -   Comparison functions:
 
@@ -109,9 +114,9 @@ A specificity passed into any of these utility functions can be any of:
 
 ## Standalone Utility Functions
 
-All static functions the Specificity class contains are also exported from as standalone functions using [Subpath Exports](https://nodejs.org/api/packages.html#subpath-exports).
+All static functions the `Specificity` class contains are also exported from as standalone functions using [Subpath Exports](https://nodejs.org/api/packages.html#subpath-exports).
 
-If you're only interested in including some of these functions into your project you can import them from their Subpath. As a result, your bundle size will be reduced greatly _(except for including the standalone `calculate`, as it returns an array of Specificity instances that relies on the whole lot)_
+If you're only interested in including some of these functions into your project you can import them from their Subpath. As a result, your bundle size will be reduced greatly _(except for including the standalone `calculate`, as it returns an array of `Specificity` instances that relies on the whole lot)_
 
 ```js
 import { calculate } from '@bramus/specificity/core';
