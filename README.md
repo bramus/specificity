@@ -84,37 +84,37 @@ specificity.isGreaterThan(specificities[1])); // false
 specificity.isLessThan(specificities[1])); // true
 ```
 
-## Static Functions
+## Utility Functions (Static Methods)
 
-This package also exposes some utility functions to work with specificities. These are all exposed as static functions on the `Specificity` class.
+This package also exposes some utility functions to work with specificities. These utility functions are all exposed as static methods on the `Specificity` class.
 
--   Comparison functions:
+- Comparing:
 
-    -   `Specificity.compare(s1, s2)`: Compares s1 to s2. Returns a value that can be:
-        -   `> 0` = Sort s2 before s1 _(i.e. s1 is more specific than s2)_
-        -   `0` = Keep original order of s1 and s2 _(i.e. s1 and s2 are equally specific)_
-        -   `< 0` = Sort s1 before s2 _(i.e. s1 is less specific than s2)_
-    -   `Specificity.equals(s1, s2)`: Returns `true` if s1 and s2 have the same specificity. If not, `false` is returned.
-    -   `Specificity.greaterThan(s1, s2)`: Returns `true` if s1 has a higher specificity than s2. If not, `false` is returned.
-    -   `Specificity.lessThan(s1, s2)`: Returns `true` if s1 has a lower specificity than s2. If not, `false` is returned.
+    - `Specificity.compare(s1, s2)`: Compares s1 to s2. Returns a value that can be:
+        - `> 0` = Sort s2 before s1 _(i.e. s1 is more specific than s2)_
+        - `0` = Keep original order of s1 and s2 _(i.e. s1 and s2 are equally specific)_
+        - `< 0` = Sort s1 before s2 _(i.e. s1 is less specific than s2)_
+    - `Specificity.equals(s1, s2)`: Returns `true` if s1 and s2 have the same specificity. If not, `false` is returned.
+    - `Specificity.greaterThan(s1, s2)`: Returns `true` if s1 has a higher specificity than s2. If not, `false` is returned.
+    - `Specificity.lessThan(s1, s2)`: Returns `true` if s1 has a lower specificity than s2. If not, `false` is returned.
 
--   Sorting functions:
+- Sorting:
 
-    -   `Specificity.sortAsc(s1, s2, …, sN)`: Sorts the given specificities in ascending order _(low specificity to high specificity)_
-    -   `Specificity.sortDesc(s1, s2, …, sN)`: Sorts the given specificities in descending order _(high specificity to low specificity)_
+    - `Specificity.sortAsc(s1, s2, …, sN)`: Sorts the given specificities in ascending order _(low specificity to high specificity)_
+    - `Specificity.sortDesc(s1, s2, …, sN)`: Sorts the given specificities in descending order _(high specificity to low specificity)_
 
--   Filter functions:
-    -   `Specificity.min(s1, s2, …, sN)`: Filters out the value with the lowest specificity
-    -   `Specificity.max(s1, s2, …, sN)`: Filters out the value with the highest specificity
+- Filtering:
+    - `Specificity.min(s1, s2, …, sN)`: Filters out the value with the lowest specificity
+    - `Specificity.max(s1, s2, …, sN)`: Filters out the value with the highest specificity
 
 A specificity passed into any of these utility functions can be any of:
 
--   An instance of the included `Specificity` class
--   A simple Object such as `{'a': 1, 'b': 0, 'c': 2}`
+- An instance of the included `Specificity` class
+- A simple Object such as `{'a': 1, 'b': 0, 'c': 2}`
 
-## Standalone Utility Functions
+## Utility Functions (Standalone)
 
-All static functions the `Specificity` class contains are also exported from as standalone functions using [Subpath Exports](https://nodejs.org/api/packages.html#subpath-exports).
+All static methods the `Specificity` class exposes are also exported as standalone functions using [Subpath Exports](https://nodejs.org/api/packages.html#subpath-exports).
 
 If you're only interested in including some of these functions into your project you can import them from their Subpath. As a result, your bundle size will be reduced greatly _(except for including the standalone `calculate`, as it returns an array of `Specificity` instances that relies on the whole lot)_
 
