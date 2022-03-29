@@ -1,24 +1,61 @@
 {
   "name": "@bramus/specificity",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "description": "Calculate specificity of a CSS Selector",
   "type": "module",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "export": {
-    ".": "./dist/index.esm.js",
-    "import": "./dist/index.esm.js",
-    "require": "./dist/index.cjs.js"
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "browser": "./dist/index.js",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./core": {
+      "import": "./src/core/index.js"
+    },
+    "./util": {
+      "import": "./src/util/index.js"
+    },
+    "./compare": {
+      "import": "./src/util/compare.js"
+    },
+    "./filter": {
+      "import": "./src/util/filter.js"
+    },
+    "./sort": {
+      "import": "./src/util/sort.js"
+    }
+  },
+  "unpkg": "./dist/index.js",
+  "jsdelivr": "./dist/index.js",
+  "files": [
+    "bin",
+    "src",
+    "dist",
+    "index.d.ts"
+  ],
+  "types": "./index.d.ts",
+  "bin": {
+    "specificity": "./bin/cli.js"
   },
   "scripts": {
-    "build-esm": "esbuild --bundle ./src/index.js --outfile=./dist/index.esm.js --format=esm --sourcemap --minify",
-    "build-cjs": "esbuild --bundle ./src/index.js --outfile=./dist/index.cjs.js --format=cjs --sourcemap --minify",
+    "build-esm": "esbuild --bundle ./src/index.js --outfile=./dist/index.js --format=esm --sourcemap --minify",
+    "build-cjs": "esbuild --bundle ./src/index.js --outfile=./dist/index.cjs --format=cjs --sourcemap --minify",
     "lint": "prettier --check '{src,test}/**/*.{ts,tsx,js,jsx}'",
     "prettier": "prettier --write '{src,test}/**/*.{ts,tsx,js,jsx}'",
     "build": "npm run build-esm && npm run build-cjs",
+    "prepack": "npm run prevent-dirty-tree",
     "prepublish": "npm run build",
     "pretest": "npm run build",
-    "test": "mocha"
+    "test": "mocha",
+    "beta-version-patch": "npm version $(semver $npm_package_version -i prerelease --preid beta)",
+    "beta-version-minor": "npm version $(semver $npm_package_version -i preminor --preid beta)",
+    "beta-version-major": "npm version $(semver $npm_package_version -i premajor --preid beta)",
+    "rc-version": "npm version $(semver $npm_package_version -i prerelease --preid rc)",
+    "final-release": "npm version $(semver $npm_package_version -i)",
+    "preversion": "npm run prevent-dirty-tree && npm run test",
+    "prevent-dirty-tree": "exit $(git status --porcelain | wc -l)"
   },
   "repository": {
     "type": "git",
@@ -42,7 +79,8 @@
   "devDependencies": {
     "esbuild": "^0.14.5",
     "mocha": "^9.1.3",
-    "prettier": "2.5.1"
+    "prettier": "2.5.1",
+    "semver": "^7.3.5"
   },
   "dependencies": {
     "css-tree": "^2.1.0"

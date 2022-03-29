@@ -1,157 +1,124 @@
-import csstreeParse from 'css-tree/selector-parser';
+import generate from 'css-tree/generator';
 
-const calculateHighestSpecificityInSelectorList = (selectorList) => {
-    // Calc specificity for each child Selector
-    selectorList.children.forEach((selector) => {
-        selector.specificity = calculateSpecificityOfParsedSelector(selector);
-    });
-
-    // Filter out the highest specificity
-    const highestSpecificity = selectorList.children.reduce(
-        (currentHighestSpecificity, currentSelector) => {
-            if (currentSelector.specificity.a > currentHighestSpecificity.a) {
-                return currentSelector.specificity;
-            }
-            if (currentSelector.specificity.a < currentHighestSpecificity.a) {
-                return currentHighestSpecificity;
-            }
-
-            if (currentSelector.specificity.b > currentHighestSpecificity.b) {
-                return currentSelector.specificity;
-            }
-            if (currentSelector.specificity.b < currentHighestSpecificity.b) {
-                return currentHighestSpecificity;
-            }
-
-            if (currentSelector.specificity.c > currentHighestSpecificity.c) {
-                return currentSelector.specificity;
-            }
-            if (currentSelector.specificity.c < currentHighestSpecificity.c) {
-                return currentHighestSpecificity;
-            }
-
-            // It's a tie!
-            return currentHighestSpecificity;
-        },
-        { a: 0, b: 0, c: 0 }
-    );
-
-    return highestSpecificity;
-};
-
-const calculateSpecificityOfParsedSelector = (selector) => {
-    // https://www.w3.org/TR/selectors-4/#specificity-rules
-    const specificity = {
-        a: 0 /* ID Selectors */,
-        b: 0 /* Class selectors, Attributes selectors, and Pseudo-classes */,
-        c: 0 /* Type selectors and Pseudo-elements */,
-    };
-
-    selector.children.forEach((child) => {
-        switch (child.type) {
-            case 'IdSelector':
-                specificity.a += 1;
-                break;
-
-            case 'AttributeSelector':
-            case 'ClassSelector':
-                specificity.b += 1;
-                break;
-
-            case 'PseudoClassSelector':
-                switch (child.name) {
-                    // “The specificity of a :where() pseudo-class is replaced by zero.”
-                    case 'where':
-                        // Noop :)
-                        break;
-
-                    // “The specificity of an :is(), :not(), or :has() pseudo-class is replaced by the specificity of the most specific complex selector in its selector list argument.“
-                    case 'is':
-                    case 'matches':
-                    case '-webkit-any':
-                    case '-moz-any':
-                    case 'any':
-                    case 'not':
-                    case 'has':
-                        // Calculate Specificity from SelectorList
-                        // @note Manually parsing subtree when the child is of the type Raw, due to https://github.com/csstree/csstree/issues/151
-                        const highest1 = calculateHighestSpecificityInSelectorList(
-                            child.children.first.type == 'Raw' ? csstreeParse(child.children.first.value, { context: 'selectorList' }) : child.children.first
-                        );
-
-                        // Adjust orig specificity
-                        specificity.a += highest1.a;
-                        specificity.b += highest1.b;
-                        specificity.c += highest1.c;
-
-                        break;
-
-                    // “The specificity of an :nth-child() or :nth-last-child() selector is the specificity of the pseudo class itself (counting as one pseudo-class selector) plus the specificity of the most specific complex selector in its selector list argument”
-                    case 'nth-child':
-                    case 'nth-last-child':
-                        specificity.b += 1;
-
-                        if (child.children.first.selector) {
-                            // Calculate Specificity from SelectorList
-                            const highest2 = calculateHighestSpecificityInSelectorList(child.children.first.selector);
-
-                            // Adjust orig specificity
-                            specificity.a += highest2.a;
-                            specificity.b += highest2.b;
-                            specificity.c += highest2.c;
-                        }
-                        break;
-
-                    // Improper use of Pseudo-Element Selectors
-                    // @ref https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements#index
-                    case 'after':
-                    case 'before':
-                    case 'first-letter':
-                    case 'first-line':
-                        specificity.c += 1;
-                        break;
-
-                    default:
-                        specificity.b += 1;
-                        break;
-                }
-                break;
-
-            case 'PseudoElementSelector':
-                specificity.c += 1;
-                break;
-
-            case 'TypeSelector':
-                // Omit namespace
-                let typeSelector = child.name;
-                if (typeSelector.includes('|')) {
-                    typeSelector = typeSelector.split('|')[1];
-                }
-
-                // “Ignore the universal selector”
-                if (typeSelector !== '*') {
-                    specificity.c += 1;
-                }
-                break;
-
-            default:
-                // NOOP
-                break;
-        }
-    });
-    return specificity;
-};
-
-const calculate = (selector) => {
-    const ast = csstreeParse(selector, {
-        context: 'selectorList',
-    });
-
-    if (ast.children.size > 1) {
-        throw new TypeError('Please pass in only 1 Selector');
+import { calculate } from './core/index.js';
+import { compare, equals, greaterThan, lessThan } from './util/compare.js';
+import { min, max } from './util/filter.js';
+import { sortAsc, sortDesc } from './util/sort.js';
+class Specificity {
+    constructor(value, selector = null) {
+        this.value = value;
+        this.selector = selector;
     }
 
-    return calculateSpecificityOfParsedSelector(ast.children.first);
-};
+    get a() {
+        return this.value.a;
+    }
 
-export { calculate };
+    set a(val) {
+        throw new Error('Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value');
+    }
+
+    get b() {
+        return this.value.b;
+    }
+
+    set b(val) {
+        throw new Error('Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value');
+    }
+
+    get c() {
+        return this.value.c;
+    }
+
+    set c(val) {
+        throw new Error('Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value');
+    }
+
+    selectorString() {
+        // this.selector already is a String
+        if (typeof this.selector === 'string' || this.selector instanceof String) {
+            return this.selector;
+        }
+
+        // this.selector is a Selector as parsed by CSSTree
+        if (this.selector instanceof Object) {
+            if (this.selector.type === 'Selector') {
+                return generate(this.selector);
+            }
+        }
+
+        // this.selector is something else …
+        return '';
+    }
+
+    toObject() {
+        return this.value;
+    }
+
+    toArray() {
+        return [this.value.a, this.value.b, this.value.c];
+    }
+
+    toString() {
+        return `(${this.value.a},${this.value.b},${this.value.c})`;
+    }
+
+    toJSON() {
+        return {
+            selector: this.selectorString(),
+            asObject: this.toObject(),
+            asArray: this.toArray(),
+            asString: this.toString(),
+        };
+    }
+
+    isEqualTo(otherSpecificity) {
+        return equals(this, otherSpecificity);
+    }
+
+    isGreaterThan(otherSpecificity) {
+        return greaterThan(this, otherSpecificity);
+    }
+
+    isLessThan(otherSpecificity) {
+        return lessThan(this, otherSpecificity);
+    }
+
+    static calculate(selector) {
+        return calculate(selector);
+    }
+
+    static compare(s1, s2) {
+        return compare(s1, s2);
+    }
+
+    static equals(s1, s2) {
+        return equals(s1, s2);
+    }
+
+    static lessThan(s1, s2) {
+        return lessThan(s1, s2);
+    }
+
+    static greaterThan(s1, s2) {
+        return greaterThan(s1, s2);
+    }
+
+    static min(...specificities) {
+        return min(...specificities);
+    }
+
+    static max(...specificities) {
+        return max(...specificities);
+    }
+
+    static sortAsc(...specificities) {
+        return sortAsc(...specificities);
+    }
+
+    static sortDesc(...specificities) {
+        return sortDesc(...specificities);
+    }
+}
+
+export default Specificity;
