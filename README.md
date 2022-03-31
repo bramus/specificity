@@ -79,9 +79,9 @@ console.log(JSON.stringify(specificity));
 // }
 
 // 🔀 Need to compare against another instance? That's possible!
-specificity.isEqualTo(specificities[1])); // false
-specificity.isGreaterThan(specificities[1])); // false
-specificity.isLessThan(specificities[1])); // true
+specificity.isEqualTo(specificities[1]); // false
+specificity.isGreaterThan(specificities[1]); // false
+specificity.isLessThan(specificities[1]); // true
 ```
 
 ## Utility Functions (Static Methods)
@@ -127,7 +127,7 @@ import { sortAsc, sortDesc } from '@bramus/specificity/sort';
 
 ## Type Definitions
 
-Although `@bramus/specificity` comes is written in Vanilla JavaScript, it does include [Type Definitions](https://www.typescriptlang.org/docs/handbook/2/type-declarations.html) which are exposed via its `package.json`.
+Although `@bramus/specificity` is written in Vanilla JavaScript, it does include [Type Definitions](https://www.typescriptlang.org/docs/handbook/2/type-declarations.html) which are exposed via its `package.json`.
 
 ## Binary/CLI
 
