@@ -103,33 +103,23 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
     return new Specificity(specificity, selectorObj);
 };
 
-const convertToAST = (source, type) => {
-    const typesToContextMap = {
-        SelectorList: 'selectorList',
-        Selector: 'selector',
-    };
-
-    // We won't support the passed in type
-    if (!typesToContextMap[type]) {
-        throw new TypeError(`Invalid value for argument type: ${type} is not supported.`);
-    }
-
+const convertToAST = (source) => {
     // The passed in argument was a String.
     // ~> Let's try and parse to an AST
     if (typeof source === 'string' || source instanceof String) {
         try {
             return parse(source, {
-                context: typesToContextMap[typesToContextMap],
+                context: 'selectorList',
             });
         } catch (e) {
-            throw new TypeError(`Could not convert passed in source to ${type}: ${e.message}`);
+            throw new TypeError(`Could not convert passed in source to SelectorList: ${e.message}`);
         }
     }
 
     // The passed in argument was an Object.
-    // ~> Let's verify if it's a AST of the type ${type}
+    // ~> Let's verify if it's a AST of the type Selector or SelectorList
     if (source instanceof Object) {
-        if (source.type && source.type === type) {
+        if (source.type && ['Selector', 'SelectorList'].includes(source.type)) {
             return source;
         }
 
@@ -137,14 +127,14 @@ const convertToAST = (source, type) => {
         if (source.type && source.type === 'Raw') {
             try {
                 return parse(source.value, {
-                    context: typesToContextMap[typesToContextMap],
+                    context: 'selectorList',
                 });
             } catch (e) {
-                throw new TypeError(`Could not convert passed in source to ${type}: ${e.message}`);
+                throw new TypeError(`Could not convert passed in source to SelectorList: ${e.message}`);
             }
         }
 
-        throw new TypeError(`Passed in source is an Object but no AST / AST of the type ${type}`);
+        throw new TypeError(`Passed in source is an Object but no AST / AST of the type Selector or SelectorList`);
     }
 
     throw new TypeError(`Passed in source is not a String nor an Object. I don't know what to do with it.`);
@@ -158,17 +148,23 @@ const calculate = (selector) => {
 
     // Make sure we have a SelectorList AST
     // If not, an exception will be thrown
-    const ast = convertToAST(selector, 'SelectorList');
+    const ast = convertToAST(selector);
 
-    // Calculate Specificity for each contained Selector
-    const specificities = [];
-    ast.children.forEach((selector) => {
-        const specificity = calculateSpecificityOfSelectorObject(selector);
-        specificities.push(specificity);
-    });
+    // Selector?
+    if (ast.type === 'Selector') {
+        return [calculateSpecificityOfSelectorObject(selector)];
+    }
 
-    // Here ya go!
-    return specificities;
+    // SelectorList?
+    // ~> Calculate Specificity for each contained Selector
+    if (ast.type === 'SelectorList') {
+        const specificities = [];
+        ast.children.forEach((selector) => {
+            const specificity = calculateSpecificityOfSelectorObject(selector);
+            specificities.push(specificity);
+        });
+        return specificities;
+    }
 };
 
 export { calculate };

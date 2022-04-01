@@ -36,6 +36,8 @@ const [s] = Specificity.calculate('header:where(#top) nav li:nth-child(2n)');
 s.toString(); // ~> "(0,1,3)"
 ```
 
+💡 Under the hood, `@bramus/specificity` uses [CSSTree](https://github.com/csstree/csstree) to do the parsing of strings to Selectors. As a result, the `calculate` method also accepts a [CSSTree AST](https://github.com/csstree/csstree/blob/master/docs/ast.md) of the types `Selector` and `SelectorList`.
+
 ## The Return Format
 
 A calculated specificity is represented as an instance of the `Specificity` class. The `Specificity` class includes methods to get the specificity value in a certain format, along with some convenience methods to compare it against other instances.
@@ -142,4 +144,4 @@ $ specificity "header:where(#top) nav li:nth-child(2n), #doormat"
 
 The idea to create this package was sparked by [the wonderful Specificity Calculator created by Kilian Valkhof / Polypane](https://polypane.app/css-specificity-calculator/), a highly educational tool that not only calculates the specificity, but also explains which parts are responsible for it.
 
-The heavy lifting of doing the actual parsing is done by [CSSTree](https://github.com/csstree/csstree).
+The heavy lifting of doing the actual parsing of Selectors is done by [CSSTree](https://github.com/csstree/csstree).

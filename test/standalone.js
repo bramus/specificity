@@ -1,4 +1,5 @@
 import { deepEqual } from 'assert';
+import * as csstree from 'css-tree';
 import Specificity from '../dist/index.js';
 
 import { calculate } from './../src/core/index.js';
@@ -17,6 +18,35 @@ describe('STANDALONE CALCULATE', () => {
         it('header:where(#top) nav li:nth-child(2n + 1) = (0,1,3)', () => {
             deepEqual(Specificity.calculate('header:where(#top) nav li:nth-child(2n + 1)')[0].toObject(), calculate('header:where(#top) nav li:nth-child(2n + 1)')[0].toObject());
         });
+    });
+});
+
+describe('STANDALONE CACULATE WITH PREPARSED AST', () => {
+    const css = `
+        html #test, .class[cool] {
+            color: red;
+        }
+        foo {
+            background: lime;
+        }
+    `;
+
+    const ast = csstree.parse(css);
+
+    describe('Pass a SelectorList into calculate', () => {
+        const selectorLists = csstree.findAll(ast, (node) => node.type === 'SelectorList');
+
+        deepEqual(Specificity.calculate(selectorLists[0])[0].toObject(), { a: 1, b: 0, c: 1 });
+        deepEqual(Specificity.calculate(selectorLists[0])[1].toObject(), { a: 0, b: 2, c: 0 });
+        deepEqual(Specificity.calculate(selectorLists[1])[0].toObject(), { a: 0, b: 0, c: 1 });
+    });
+
+    describe('Selector', () => {
+        const selectors = csstree.findAll(ast, (node) => node.type === 'Selector');
+
+        deepEqual(Specificity.calculate(selectors[0])[0].toObject(), { a: 1, b: 0, c: 1 });
+        deepEqual(Specificity.calculate(selectors[1])[0].toObject(), { a: 0, b: 2, c: 0 });
+        deepEqual(Specificity.calculate(selectors[2])[0].toObject(), { a: 0, b: 0, c: 1 });
     });
 });
 
