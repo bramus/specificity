@@ -2,7 +2,7 @@
 export type SpecificityArray = [number, number, number];
 export type SpecificityObject = { a: number; b: number; c: number };
 
-export class Specificity {
+export default class Specificity {
     static calculate(selector: string | CSSTreeAST): Array<Specificity>;
     static compare(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): number;
     static equals(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): boolean;
