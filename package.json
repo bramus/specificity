@@ -59,7 +59,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bramus/js-specificity.git"
+    "url": "git+https://github.com/bramus/specificity.git"
   },
   "keywords": [
     "css",
@@ -73,9 +73,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bramus/js-specificity/issues"
+    "url": "https://github.com/bramus/specificity/issues"
   },
-  "homepage": "https://github.com/bramus/js-specificity#readme",
+  "homepage": "https://github.com/bramus/specificity#readme",
   "devDependencies": {
     "esbuild": "^0.14.5",
     "mocha": "^9.1.3",
