@@ -1,10 +1,12 @@
-![Calculate CSS Specificity](./screenshots/calculate-specificity.png)
+[![Calculate CSS Specificity](./screenshots/calculate-specificity.png)](https://codepen.io/bramus/pen/WNXyoYm)
 
 # Specificity
 
 `@bramus/specificity` is a package to calculate the specificity of CSS Selectors. It also includes some convenience functions to compare, sort, and filter an array of specificity values.
 
 Supports [Selectors Level 4](https://www.w3.org/TR/selectors-4/), including those special cases `:is()`, `:where()`, `:not()`, etc.
+
+Demo: [https://codepen.io/bramus/pen/WNXyoYm](https://codepen.io/bramus/pen/WNXyoYm)
 
 ## Installation
 
