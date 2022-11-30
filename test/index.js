@@ -77,8 +77,29 @@ describe('CALCULATE', () => {
         });
     });
 
+    describe('Pseudo-Element Selector ::slotted', () => {
+        it('::slotted', () => {
+            deepEqual(Specificity.calculate('::slotted')[0].toObject(), { a: 0, b: 0, c: 1 });
+        });
+        it('::slotted()', () => {
+            deepEqual(Specificity.calculate('::slotted()')[0].toObject(), { a: 0, b: 0, c: 1 });
+        });
+        it('::slotted(div#foo)', () => {
+            deepEqual(Specificity.calculate('::slotted(div#foo)')[0].toObject(), { a: 1, b: 0, c: 2 });
+        });
+        it('::slotted(#foo invalid)', () => {
+            deepEqual(Specificity.calculate('::slotted(#foo invalid)')[0].toObject(), { a: 1, b: 0, c: 1 });
+        });
+        it('::slotted(#foo.bar)', () => {
+            deepEqual(Specificity.calculate('::slotted(#foo.bar)')[0].toObject(), { a: 1, b: 1, c: 1 });
+        });
+        it('::slotted(#foo.bar invalid)', () => {
+            deepEqual(Specificity.calculate('::slotted(#foo.bar invalid)')[0].toObject(), { a: 1, b: 1, c: 1 });
+        });
+    });
+
     // @ref https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements#index
-    describe('Pseudo-Element improperly used as Pseudo-Class Selector = (0,0,1)', () => {
+    describe('Pseudo-Class improperly used instead of Pseudo-Element Selector = (0,0,1)', () => {
         it(':before', () => {
             deepEqual(Specificity.calculate(':before')[0].toObject(), { a: 0, b: 0, c: 1 });
         });

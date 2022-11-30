@@ -78,7 +78,39 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                 break;
 
             case 'PseudoElementSelector':
-                specificity.c += 1;
+                switch (child.name) {
+                    // “The specificity of ::slotted() is that of a pseudo-element, plus the specificity of its argument.”
+                    case 'slotted':
+                        specificity.c += 1;
+
+                        if (child.children) {
+                            // Workaround to a css-tree bug in which it allows complex selectors instead of only compound selectors
+                            // We work around it by filtering out any Combinator and successive Selectors
+                            const childAST = { type: 'Selector', children: [] };
+                            let foundCombinator = false;
+                            child.children.first.children.forEach((entry) => {
+                                if (foundCombinator) return false;
+                                if (entry.type === 'Combinator') {
+                                    foundCombinator = true;
+                                    return false;
+                                }
+                                childAST.children.push(entry);
+                            });
+
+                            // Calculate Specificity from Selector
+                            const childSpecificity = calculate(childAST)[0];
+
+                            // Adjust orig specificity
+                            specificity.a += childSpecificity.a;
+                            specificity.b += childSpecificity.b;
+                            specificity.c += childSpecificity.c;
+                        }
+                        break;
+
+                    default:
+                        specificity.c += 1;
+                        break;
+                }
                 break;
 
             case 'TypeSelector':
