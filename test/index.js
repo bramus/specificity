@@ -159,6 +159,30 @@ describe('CALCULATE', () => {
         });
     });
 
+    describe('CSS :host() / :host-context() = Pseudo-class, plus the specificity of its argument', () => {
+        it(':host = (0,1,0)', () => {
+            deepEqual(Specificity.calculate(':host')[0].toObject(), { a: 0, b: 1, c: 0 });
+        });
+        it.skip(':host() = (0,1,0)', () => {
+            deepEqual(Specificity.calculate(':host()')[0].toObject(), { a: 0, b: 1, c: 0 });
+        });
+        it(':host(#foo.bar) = (1,2,0)', () => {
+            deepEqual(Specificity.calculate(':host(#foo.bar)')[0].toObject(), { a: 1, b: 2, c: 0 });
+        });
+        it(':host(#foo.bar invalid) = (1,2,0)', () => {
+            deepEqual(Specificity.calculate(':host(#foo.bar invalid)')[0].toObject(), { a: 1, b: 2, c: 0 });
+        });
+        it.skip(':host-context() = (0,1,0)', () => {
+            deepEqual(Specificity.calculate(':host-context()')[0].toObject(), { a: 0, b: 1, c: 0 });
+        });
+        it(':host-context(#foo.bar) = (1,2,0)', () => {
+            deepEqual(Specificity.calculate(':host-context(#foo.bar)')[0].toObject(), { a: 1, b: 2, c: 0 });
+        });
+        it(':host-context(#foo.bar invalid) = (1,2,0)', () => {
+            deepEqual(Specificity.calculate(':host-context(#foo.bar invalid)')[0].toObject(), { a: 1, b: 2, c: 0 });
+        });
+    });
+
     // @ref https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors#namespaces
     describe('Namespaced Selectors', () => {
         it('ns|* = (0,0,0)', () => {

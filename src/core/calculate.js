@@ -62,7 +62,37 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                         }
                         break;
 
-                    // Improper use of Pseudo-Element Selectors
+                    // “The specificity of :host is that of a pseudo-class. The specificity of :host() is that of a pseudo-class, plus the specificity of its argument.”
+                    // “The specificity of :host-context() is that of a pseudo-class, plus the specificity of its argument.”
+                    case 'host-context':
+                    case 'host':
+                        specificity.b += 1;
+
+                        if (child.children) {
+                            // Workaround to a css-tree bug in which it allows complex selectors instead of only compound selectors
+                            // We work around it by filtering out any Combinator and successive Selectors
+                            const childAST = { type: 'Selector', children: [] };
+                            let foundCombinator = false;
+                            child.children.first.children.forEach((entry) => {
+                                if (foundCombinator) return false;
+                                if (entry.type === 'Combinator') {
+                                    foundCombinator = true;
+                                    return false;
+                                }
+                                childAST.children.push(entry);
+                            });
+
+                            // Calculate Specificity from Selector
+                            const childSpecificity = calculate(childAST)[0];
+
+                            // Adjust orig specificity
+                            specificity.a += childSpecificity.a;
+                            specificity.b += childSpecificity.b;
+                            specificity.c += childSpecificity.c;
+                        }
+                        break;
+
+                    // Improper use of Pseudo-Class Selectors instead of a Pseudo-Element
                     // @ref https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements#index
                     case 'after':
                     case 'before':
@@ -144,7 +174,7 @@ const convertToAST = (source) => {
                 context: 'selectorList',
             });
         } catch (e) {
-            throw new TypeError(`Could not convert passed in source to SelectorList: ${e.message}`);
+            throw new TypeError(`Could not convert passed in source '${source}' to SelectorList: ${e.message}`);
         }
     }
 
