@@ -141,6 +141,21 @@ describe('CALCULATE', () => {
         });
     });
 
+    describe('CSS empty :is, :matches, :any, :where = (0,0,0)', () => {
+        it(':is = (0,0,0)', () => {
+            deepEqual(Specificity.calculate(':is')[0].toObject(), { a: 0, b: 0, c: 0 })
+        })
+        it(':matches = (0,0,0)', () => {
+            deepEqual(Specificity.calculate(':matches')[0].toObject(), { a: 0, b: 0, c: 0 })
+        })
+        it(':any = (0,0,0)', () => {
+            deepEqual(Specificity.calculate(':any')[0].toObject(), { a: 0, b: 0, c: 0 })
+        })
+        it(':where = (0,0,0)', () => {
+            deepEqual(Specificity.calculate(':where')[0].toObject(), { a: 0, b: 0, c: 0 })
+        })
+    })
+
     describe('CSS :has() = Specificity of the most specific complex selector in its selector list argument', () => {
         it(':has(#foo, .bar, baz) = (1,0,0)', () => {
             deepEqual(Specificity.calculate(':has(#foo, .bar, baz)')[0].toObject(), { a: 1, b: 0, c: 0 });
