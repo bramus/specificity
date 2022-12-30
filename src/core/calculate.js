@@ -22,7 +22,7 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                 break;
 
             case 'PseudoClassSelector':
-                switch (child.name) {
+                switch (child.name.toLowerCase()) {
                     // “The specificity of a :where() pseudo-class is replaced by zero.”
                     case 'where':
                         // Noop :)

@@ -103,8 +103,14 @@ describe('CALCULATE', () => {
         it(':before', () => {
             deepEqual(Specificity.calculate(':before')[0].toObject(), { a: 0, b: 0, c: 1 });
         });
+        it(':BEFORE', () => {
+            deepEqual(Specificity.calculate(':BEFORE')[0].toObject(), { a: 0, b: 0, c: 1 });
+        });
         it(':after', () => {
             deepEqual(Specificity.calculate(':after')[0].toObject(), { a: 0, b: 0, c: 1 });
+        });
+        it(':AFTER', () => {
+            deepEqual(Specificity.calculate(':AFTER')[0].toObject(), { a: 0, b: 0, c: 1 });
         });
         it(':first-line', () => {
             deepEqual(Specificity.calculate(':first-line')[0].toObject(), { a: 0, b: 0, c: 1 });
