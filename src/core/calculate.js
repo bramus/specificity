@@ -36,13 +36,15 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                     case 'any':
                     case 'not':
                     case 'has':
-                        // Calculate Specificity from nested SelectorList
-                        const max1 = max(...calculate(child.children.first));
+                        if (child.children) {
+                            // Calculate Specificity from nested SelectorList
+                            const max1 = max(...calculate(child.children.first));
 
-                        // Adjust orig specificity
-                        specificity.a += max1.a;
-                        specificity.b += max1.b;
-                        specificity.c += max1.c;
+                            // Adjust orig specificity
+                            specificity.a += max1.a;
+                            specificity.b += max1.b;
+                            specificity.c += max1.c;
+                        }
 
                         break;
 
