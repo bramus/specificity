@@ -139,6 +139,19 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                         }
                         break;
 
+                    case 'view-transition-group':
+                    case 'view-transition-image-pair':
+                    case 'view-transition-old':
+                    case 'view-transition-new':
+                        // The specificity of a view-transition selector with a * argument is zero.
+                        if (child.children && child.children.first.value === '*') {
+                            break
+                        }
+                        // The specificity of a view-transition selector with an argument is the same
+                        // as for other pseudo - elements, and is equivalent to a type selector.
+                        specificity.c += 1
+                        break;
+
                     default:
                         specificity.c += 1;
                         break;
