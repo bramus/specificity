@@ -98,6 +98,39 @@ describe('CALCULATE', () => {
         });
     });
 
+    describe('Pseudo-Element Selector ::view-transition and friends', () => {
+        // Default Specificity is 0,0,1...
+        it('::view-transition', () => {
+            deepEqual(Specificity.calculate('::view-transition')[0].toObject(), { a: 0, b: 0, c: 1 });
+        });
+        it('::view-transition-group(test)', () => {
+            deepEqual(Specificity.calculate('::view-transition-group(test)')[0].toObject(), { a: 0, b: 0, c: 1 });
+        });
+        it('::view-transition-image-pair(test)', () => {
+            deepEqual(Specificity.calculate('::view-transition-image-pair(test)')[0].toObject(), { a: 0, b: 0, c: 1 });
+        });
+        it('::view-transition-old(test)', () => {
+            deepEqual(Specificity.calculate('::view-transition-old(test)')[0].toObject(), { a: 0, b: 0, c: 1 });
+        });
+        it('::view-transition-new(test)', () => {
+            deepEqual(Specificity.calculate('::view-transition-new(test)')[0].toObject(), { a: 0, b: 0, c: 1 });
+        });
+
+        // Specificity is 0,0,0 when name equals *
+        it('::view-transition-group(*)', () => {
+            deepEqual(Specificity.calculate('::view-transition-group(*)')[0].toObject(), { a: 0, b: 0, c: 0 });
+        });
+        it('::view-transition-image-pair(*)', () => {
+            deepEqual(Specificity.calculate('::view-transition-image-pair(*)')[0].toObject(), { a: 0, b: 0, c: 0 });
+        });
+        it('::view-transition-old(*)', () => {
+            deepEqual(Specificity.calculate('::view-transition-old(*)')[0].toObject(), { a: 0, b: 0, c: 0 });
+        });
+        it('::view-transition-new(*)', () => {
+            deepEqual(Specificity.calculate('::view-transition-new(*)')[0].toObject(), { a: 0, b: 0, c: 0 });
+        });
+    });
+
     // @ref https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements#index
     describe('Pseudo-Class improperly used instead of Pseudo-Element Selector = (0,0,1)', () => {
         it(':before', () => {
