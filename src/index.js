@@ -1,9 +1,11 @@
 import generate from 'css-tree/generator';
-
 import { calculate } from './core/index.js';
 import { compare, equals, greaterThan, lessThan } from './util/compare.js';
 import { min, max } from './util/filter.js';
 import { sortAsc, sortDesc } from './util/sort.js';
+
+const SETTER_ERROR_MESSAGE = 'Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value'
+
 class Specificity {
     constructor(value, selector = null) {
         this.value = value;
@@ -15,7 +17,7 @@ class Specificity {
     }
 
     set a(val) {
-        throw new Error('Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value');
+        throw new Error(SETTER_ERROR_MESSAGE);
     }
 
     get b() {
@@ -23,7 +25,7 @@ class Specificity {
     }
 
     set b(val) {
-        throw new Error('Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value');
+        throw new Error(SETTER_ERROR_MESSAGE);
     }
 
     get c() {
@@ -31,7 +33,7 @@ class Specificity {
     }
 
     set c(val) {
-        throw new Error('Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value');
+        throw new Error(SETTER_ERROR_MESSAGE);
     }
 
     selectorString() {
