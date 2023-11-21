@@ -4,7 +4,7 @@ import { compare, equals, greaterThan, lessThan } from './util/compare.js';
 import { min, max } from './util/filter.js';
 import { sortAsc, sortDesc } from './util/sort.js';
 
-const SETTER_ERROR_MESSAGE = 'Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value'
+const SETTER_ERROR_MESSAGE = 'Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value';
 
 class Specificity {
     constructor(value, selector = null) {
