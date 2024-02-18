@@ -4,7 +4,11 @@ import { compare, equals, greaterThan, lessThan } from './util/compare.js';
 import { min, max } from './util/filter.js';
 import { sortAsc, sortDesc } from './util/sort.js';
 
-const SETTER_ERROR_MESSAGE = 'Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value';
+class NotAllowedError extends Error {
+    constructor() {
+        super('Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()');
+    }
+}
 
 class Specificity {
     constructor(value, selector = null) {
@@ -17,7 +21,7 @@ class Specificity {
     }
 
     set a(val) {
-        throw new Error(SETTER_ERROR_MESSAGE);
+        throw new NotAllowedError();
     }
 
     get b() {
@@ -25,7 +29,7 @@ class Specificity {
     }
 
     set b(val) {
-        throw new Error(SETTER_ERROR_MESSAGE);
+        throw new NotAllowedError();
     }
 
     get c() {
@@ -33,7 +37,7 @@ class Specificity {
     }
 
     set c(val) {
-        throw new Error(SETTER_ERROR_MESSAGE);
+        throw new NotAllowedError();
     }
 
     selectorString() {

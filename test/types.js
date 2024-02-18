@@ -25,7 +25,7 @@ describe('Specificity Class, manual instance', () => {
                     s.a = 1;
                 },
                 {
-                    message: 'Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value',
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
                 }
             );
         });
@@ -35,7 +35,7 @@ describe('Specificity Class, manual instance', () => {
                     s.b = 1;
                 },
                 {
-                    message: 'Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value',
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
                 }
             );
         });
@@ -45,7 +45,7 @@ describe('Specificity Class, manual instance', () => {
                     s.c = 1;
                 },
                 {
-                    message: 'Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value',
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
                 }
             );
         });
@@ -98,7 +98,7 @@ describe('Specificity Class, manual instance, no given selector', () => {
                     s.a = 1;
                 },
                 {
-                    message: 'Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value',
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
                 }
             );
         });
@@ -108,7 +108,7 @@ describe('Specificity Class, manual instance, no given selector', () => {
                     s.b = 1;
                 },
                 {
-                    message: 'Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value',
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
                 }
             );
         });
@@ -118,7 +118,7 @@ describe('Specificity Class, manual instance, no given selector', () => {
                     s.c = 1;
                 },
                 {
-                    message: 'Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value',
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
                 }
             );
         });
@@ -171,7 +171,7 @@ describe('Specificity Class', () => {
                     s.a = 1;
                 },
                 {
-                    message: 'Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value',
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
                 }
             );
         });
@@ -181,7 +181,7 @@ describe('Specificity Class', () => {
                     s.b = 1;
                 },
                 {
-                    message: 'Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value',
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
                 }
             );
         });
@@ -191,7 +191,7 @@ describe('Specificity Class', () => {
                     s.c = 1;
                 },
                 {
-                    message: 'Manipulating the port of the specificity directly is not allowed. Instead, directly set a new value',
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
                 }
             );
         });
