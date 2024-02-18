@@ -28,12 +28,17 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                         // Noop :)
                         break;
 
-                    // “The specificity of an :is(), :not(), or :has() pseudo-class is replaced by the specificity of the most specific complex selector in its selector list argument.“
-                    case 'is':
-                    case 'matches':
                     case '-webkit-any':
                     case '-moz-any':
                     case 'any':
+                        if (child.children) {
+                            specificity.b += 1;
+                        }
+                        break;
+
+                    // “The specificity of an :is(), :not(), or :has() pseudo-class is replaced by the specificity of the most specific complex selector in its selector list argument.“
+                    case 'is':
+                    case 'matches':
                     case 'not':
                     case 'has':
                         if (child.children) {
