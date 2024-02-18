@@ -162,21 +162,21 @@ describe('CALCULATE', () => {
         });
     });
 
-    describe('CSS :is() - :matches() = Specificity of the most specific complex selector in its selector list argument', () => {
+    describe('CSS :is(), :matches(), :-moz-any = Specificity of the most specific complex selector in its selector list argument', () => {
         it(':is(#foo, .bar, baz) = (1,0,0)', () => {
             deepEqual(Specificity.calculate(':is(#foo, .bar, baz)')[0].toObject(), { a: 1, b: 0, c: 0 });
         });
         it(':matches(#foo, .bar, baz) = (1,0,0)', () => {
             deepEqual(Specificity.calculate(':matches(#foo, .bar, baz)')[0].toObject(), { a: 1, b: 0, c: 0 });
         });
+        it(':-moz-any(#foo, .bar, baz) = (1,0,0)', () => {
+            deepEqual(Specificity.calculate(':-moz-any(#foo, .bar, baz)')[0].toObject(), { a: 1, b: 0, c: 0 });
+        });
     });
 
     describe('CSS :any() = (0,1,0)', () => {
         it(':any(#foo, .bar, baz) = (0,1,0)', () => {
             deepEqual(Specificity.calculate(':any(#foo, .bar, baz)')[0].toObject(), { a: 0, b: 1, c: 0 });
-        });
-        it(':-moz-any(#foo, .bar, baz) = (0,1,0)', () => {
-            deepEqual(Specificity.calculate(':-moz-any(#foo, .bar, baz)')[0].toObject(), { a: 0, b: 1, c: 0 });
         });
         it(':-webkit-any(#foo, .bar, baz) = (0,1,0)', () => {
             deepEqual(Specificity.calculate(':-webkit-any(#foo, .bar, baz)')[0].toObject(), { a: 0, b: 1, c: 0 });
