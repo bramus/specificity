@@ -1,7 +1,7 @@
 import { deepEqual } from 'assert';
 import * as csstree from 'css-tree';
 
-import { calculate } from './../src/core/index.js';
+import { calculate, calculateSelectorNode } from './../src/core/index.js';
 import { compare, equals, greaterThan, lessThan } from './../src/util/compare.js';
 import { min, max } from './../src/util/filter.js';
 import { sortAsc, sortDesc } from './../src/util/sort.js';
@@ -47,6 +47,24 @@ describe('STANDALONE CACULATE WITH PREPARSED AST', () => {
         deepEqual(calculate(selectors[1])[0].toObject(), { a: 0, b: 2, c: 0 });
         deepEqual(calculate(selectors[2])[0].toObject(), { a: 0, b: 0, c: 1 });
     });
+});
+
+describe('STANDALONE CACULATE_SELECTOR_NODE', () => {
+    const css = `
+        html #test, .class[cool] {
+            color: red;
+        }
+        foo {
+            background: lime;
+        }
+    `;
+
+    const ast = csstree.parse(css);
+    const selectors = csstree.findAll(ast, (node) => node.type === 'Selector');
+
+    deepEqual(calculateSelectorNode(selectors[0]), { a: 1, b: 0, c: 1 });
+    deepEqual(calculateSelectorNode(selectors[1]), { a: 0, b: 2, c: 0 });
+    deepEqual(calculateSelectorNode(selectors[2]), { a: 0, b: 0, c: 1 });
 });
 
 describe('STANDALONE COMPARE', () => {

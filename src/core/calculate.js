@@ -2,23 +2,22 @@ import parse from 'css-tree/selector-parser';
 import Specificity from '../index.js';
 import { max } from './../util/index.js';
 
-const calculateSpecificityOfSelectorObject = (selectorObj) => {
+/** @param {import('css-tree').Selector} selectorNode */
+const calculateSelectorNode = (selectorNode) => {
     // https://www.w3.org/TR/selectors-4/#specificity-rules
-    const specificity = {
-        a: 0 /* ID Selectors */,
-        b: 0 /* Class selectors, Attributes selectors, and Pseudo-classes */,
-        c: 0 /* Type selectors and Pseudo-elements */,
-    };
+    let a = 0; /* ID Selectors */
+    let b = 0; /* Class selectors, Attributes selectors, and Pseudo-classes */
+    let c = 0; /* Type selectors and Pseudo-elements */
 
-    selectorObj.children.forEach((child) => {
+    selectorNode.children.forEach((child) => {
         switch (child.type) {
             case 'IdSelector':
-                specificity.a += 1;
+                a += 1;
                 break;
 
             case 'AttributeSelector':
             case 'ClassSelector':
-                specificity.b += 1;
+                b += 1;
                 break;
 
             case 'PseudoClassSelector':
@@ -46,9 +45,9 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                             const max1 = max(...calculate(child.children.first));
 
                             // Adjust orig specificity
-                            specificity.a += max1.a;
-                            specificity.b += max1.b;
-                            specificity.c += max1.c;
+                            a += max1.a;
+                            b += max1.b;
+                            c += max1.c;
                         }
 
                         break;
@@ -56,16 +55,16 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                     // “The specificity of an :nth-child() or :nth-last-child() selector is the specificity of the pseudo class itself (counting as one pseudo-class selector) plus the specificity of the most specific complex selector in its selector list argument”
                     case 'nth-child':
                     case 'nth-last-child':
-                        specificity.b += 1;
+                        b += 1;
 
                         if (child.children && child.children.first.selector) {
                             // Calculate Specificity from SelectorList
                             const max2 = max(...calculate(child.children.first.selector));
 
                             // Adjust orig specificity
-                            specificity.a += max2.a;
-                            specificity.b += max2.b;
-                            specificity.c += max2.c;
+                            a += max2.a;
+                            b += max2.b;
+                            c += max2.c;
                         }
                         break;
 
@@ -73,7 +72,7 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                     // “The specificity of :host-context() is that of a pseudo-class, plus the specificity of its argument.”
                     case 'host-context':
                     case 'host':
-                        specificity.b += 1;
+                        b += 1;
 
                         if (child.children) {
                             // Workaround to a css-tree bug in which it allows complex selectors instead of only compound selectors
@@ -93,9 +92,9 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                             const childSpecificity = calculate(childAST)[0];
 
                             // Adjust orig specificity
-                            specificity.a += childSpecificity.a;
-                            specificity.b += childSpecificity.b;
-                            specificity.c += childSpecificity.c;
+                            a += childSpecificity.a;
+                            b += childSpecificity.b;
+                            c += childSpecificity.c;
                         }
                         break;
 
@@ -105,11 +104,11 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                     case 'before':
                     case 'first-letter':
                     case 'first-line':
-                        specificity.c += 1;
+                        c += 1;
                         break;
 
                     default:
-                        specificity.b += 1;
+                        b += 1;
                         break;
                 }
                 break;
@@ -118,7 +117,7 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                 switch (child.name) {
                     // “The specificity of ::slotted() is that of a pseudo-element, plus the specificity of its argument.”
                     case 'slotted':
-                        specificity.c += 1;
+                        c += 1;
 
                         if (child.children) {
                             // Workaround to a css-tree bug in which it allows complex selectors instead of only compound selectors
@@ -138,9 +137,9 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                             const childSpecificity = calculate(childAST)[0];
 
                             // Adjust orig specificity
-                            specificity.a += childSpecificity.a;
-                            specificity.b += childSpecificity.b;
-                            specificity.c += childSpecificity.c;
+                            a += childSpecificity.a;
+                            b += childSpecificity.b;
+                            c += childSpecificity.c;
                         }
                         break;
 
@@ -154,11 +153,11 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                         }
                         // The specificity of a view-transition selector with an argument is the same
                         // as for other pseudo - elements, and is equivalent to a type selector.
-                        specificity.c += 1;
+                        c += 1;
                         break;
 
                     default:
-                        specificity.c += 1;
+                        c += 1;
                         break;
                 }
                 break;
@@ -172,7 +171,7 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
 
                 // “Ignore the universal selector”
                 if (typeSelector !== '*') {
-                    specificity.c += 1;
+                    c += 1;
                 }
                 break;
 
@@ -182,7 +181,7 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
         }
     });
 
-    return new Specificity(specificity, selectorObj);
+    return { a, b, c };
 };
 
 const convertToAST = (source) => {
@@ -222,6 +221,10 @@ const convertToAST = (source) => {
     throw new TypeError(`Passed in source is not a String nor an Object. I don't know what to do with it.`);
 };
 
+/**
+ * @param {string} selector
+ * @returns {Specificity[]}
+ */
 const calculate = (selector) => {
     // Quit while you're ahead
     if (!selector) {
@@ -234,7 +237,7 @@ const calculate = (selector) => {
 
     // Selector?
     if (ast.type === 'Selector') {
-        return [calculateSpecificityOfSelectorObject(selector)];
+        return [new Specificity(calculateSelectorNode(selector), selector)];
     }
 
     // SelectorList?
@@ -242,11 +245,11 @@ const calculate = (selector) => {
     if (ast.type === 'SelectorList') {
         const specificities = [];
         ast.children.forEach((selector) => {
-            const specificity = calculateSpecificityOfSelectorObject(selector);
+            const specificity = new Specificity(calculateSelectorNode(selector), selector);
             specificities.push(specificity);
         });
         return specificities;
     }
 };
 
-export { calculate };
+export { calculate, calculateSelectorNode };

@@ -1,5 +1,6 @@
 import { deepEqual } from 'assert';
 import Specificity from '../dist/index.js';
+import * as csstree from 'css-tree';
 
 describe('CALCULATE', () => {
     describe('Examples from the spec', () => {
@@ -275,6 +276,41 @@ describe('CALCULATE', () => {
     describe('Calculate handles nesting selectors', () => {
         it('& = (0,0,0)', () => {
             deepEqual(Specificity.calculate('&')[0].toObject(), { a: 0, b: 0, c: 0 });
+        });
+    });
+});
+
+describe('CALCULATE_SELECTOR_NODE', () => {
+    describe('Examples from the spec', () => {
+        it('* = (0,0,0)', () => {
+            deepEqual(Specificity.calculateSelectorNode(csstree.parse('*', { context: 'selector' })), { a: 0, b: 0, c: 0 });
+        });
+        it('li = (0,0,1)', () => {
+            deepEqual(Specificity.calculateSelectorNode(csstree.parse('li', { context: 'selector' })), { a: 0, b: 0, c: 1 });
+        });
+        it('ul li = (0,0,2)', () => {
+            deepEqual(Specificity.calculateSelectorNode(csstree.parse('ul li', { context: 'selector' })), { a: 0, b: 0, c: 2 });
+        });
+        it('UL OL+LI  = (0,0,3)', () => {
+            deepEqual(Specificity.calculateSelectorNode(csstree.parse('UL OL+LI ', { context: 'selector' })), { a: 0, b: 0, c: 3 });
+        });
+        it('H1 + *[REL=up] = (0,1,1)', () => {
+            deepEqual(Specificity.calculateSelectorNode(csstree.parse('H1 + *[REL=up]', { context: 'selector' })), { a: 0, b: 1, c: 1 });
+        });
+        it('UL OL LI.red = (0,1,3)', () => {
+            deepEqual(Specificity.calculateSelectorNode(csstree.parse('UL OL LI.red', { context: 'selector' })), { a: 0, b: 1, c: 3 });
+        });
+        it('LI.red.level = (0,2,1)', () => {
+            deepEqual(Specificity.calculateSelectorNode(csstree.parse('LI.red.level', { context: 'selector' })), { a: 0, b: 2, c: 1 });
+        });
+        it('#x34y = (1,0,0)', () => {
+            deepEqual(Specificity.calculateSelectorNode(csstree.parse('#x34y', { context: 'selector' })), { a: 1, b: 0, c: 0 });
+        });
+        it('#s12:not(FOO) = (1,0,1)', () => {
+            deepEqual(Specificity.calculateSelectorNode(csstree.parse('#s12:not(FOO)', { context: 'selector' })), { a: 1, b: 0, c: 1 });
+        });
+        it('.foo :is(.bar, #baz) = (1,1,0)', () => {
+            deepEqual(Specificity.calculateSelectorNode(csstree.parse('.foo :is(.bar, #baz)', { context: 'selector' })), { a: 1, b: 1, c: 0 });
         });
     });
 });
