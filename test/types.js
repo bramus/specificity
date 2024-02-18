@@ -1,4 +1,4 @@
-import { deepEqual } from 'assert';
+import { deepEqual, throws } from 'assert';
 import Specificity from '../dist/index.js';
 
 describe('Specificity Class, manual instance', () => {
@@ -16,6 +16,38 @@ describe('Specificity Class, manual instance', () => {
         });
         it('Specificity.c', () => {
             deepEqual(s.c, 3);
+        });
+    });
+    describe('Instance Setters', () => {
+        it('Specificity.a', () => {
+            throws(
+                () => {
+                    s.a = 1;
+                },
+                {
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
+                }
+            );
+        });
+        it('Specificity.b', () => {
+            throws(
+                () => {
+                    s.b = 1;
+                },
+                {
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
+                }
+            );
+        });
+        it('Specificity.c', () => {
+            throws(
+                () => {
+                    s.c = 1;
+                },
+                {
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
+                }
+            );
         });
     });
     describe('Value Formatting', () => {
@@ -59,6 +91,38 @@ describe('Specificity Class, manual instance, no given selector', () => {
             deepEqual(s.c, 3);
         });
     });
+    describe('Instance Setters', () => {
+        it('Specificity.a', () => {
+            throws(
+                () => {
+                    s.a = 1;
+                },
+                {
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
+                }
+            );
+        });
+        it('Specificity.b', () => {
+            throws(
+                () => {
+                    s.b = 1;
+                },
+                {
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
+                }
+            );
+        });
+        it('Specificity.c', () => {
+            throws(
+                () => {
+                    s.c = 1;
+                },
+                {
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
+                }
+            );
+        });
+    });
     describe('Value Formatting', () => {
         it('Specificity.toString()', () => {
             deepEqual(s.toString(), '(1,2,3)');
@@ -98,6 +162,38 @@ describe('Specificity Class', () => {
         });
         it('Specificity.c', () => {
             deepEqual(s.c, 3);
+        });
+    });
+    describe('Instance Setters', () => {
+        it('Specificity.a', () => {
+            throws(
+                () => {
+                    s.a = 1;
+                },
+                {
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
+                }
+            );
+        });
+        it('Specificity.b', () => {
+            throws(
+                () => {
+                    s.b = 1;
+                },
+                {
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
+                }
+            );
+        });
+        it('Specificity.c', () => {
+            throws(
+                () => {
+                    s.c = 1;
+                },
+                {
+                    message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
+                }
+            );
         });
     });
     describe('Value Formatting', () => {
