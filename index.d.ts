@@ -41,6 +41,7 @@ type CSSTreeAST = Object; // @TODO: Define shape
 
 // CORE
 export function calculate(selector: string | CSSTreeAST): Array<Specificity>;
+export function calculateSelectorNode(node: CSSTreeAST): { a: number; b: number; c: number; };
 
 // UTIL: COMPARE
 export function equals(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): boolean;
