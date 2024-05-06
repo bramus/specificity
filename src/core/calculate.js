@@ -30,7 +30,7 @@ const calculateSelectorNode = (selectorNode) => {
                     case '-webkit-any':
                     case 'any':
                         if (child.children) {
-                            specificity.b += 1;
+                            b += 1;
                         }
                         break;
 
