@@ -262,6 +262,12 @@ describe('CALCULATE', () => {
             deepEqual(Specificity.calculate(''), []);
         });
     });
+
+    describe('Calculate handles nesting selectors', () => {
+        it('& = (0,0,0)', () => {
+            deepEqual(Specificity.calculate('&')[0].toObject(), { a: 0, b: 0, c: 0 });
+        });
+    });
 });
 
 describe('COMPARE', () => {
