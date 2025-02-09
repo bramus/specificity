@@ -171,7 +171,6 @@ describe('CALCULATE', () => {
         });
     });
 
-
     describe('CSS :is(), :matches(), :-moz-any = Specificity of the most specific complex selector in its selector list argument', () => {
         it(':is(#foo, .bar, baz) = (1,0,0)', () => {
             deepEqual(Specificity.calculate(':is(#foo, .bar, baz)')[0].toObject(), { a: 1, b: 0, c: 0 });
