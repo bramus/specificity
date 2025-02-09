@@ -58,7 +58,7 @@ const calculateSpecificityOfSelectorObject = (selectorObj) => {
                     case 'nth-last-child':
                         specificity.b += 1;
 
-                        if (child.children.first.selector) {
+                        if (child.children && child.children.first.selector) {
                             // Calculate Specificity from SelectorList
                             const max2 = max(...calculate(child.children.first.selector));
 
