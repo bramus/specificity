@@ -1,7 +1,7 @@
 import { deepEqual } from 'assert';
 import * as csstree from 'css-tree';
 
-import { calculate } from './../src/core/index.js';
+import { calculate, calculateForAST } from './../src/core/index.js';
 import { compare, equals, greaterThan, lessThan } from './../src/util/compare.js';
 import { min, max } from './../src/util/filter.js';
 import { sortAsc, sortDesc } from './../src/util/sort.js';
@@ -46,6 +46,35 @@ describe('STANDALONE CACULATE WITH PREPARSED AST', () => {
         deepEqual(calculate(selectors[0])[0].toObject(), { a: 1, b: 0, c: 1 });
         deepEqual(calculate(selectors[1])[0].toObject(), { a: 0, b: 2, c: 0 });
         deepEqual(calculate(selectors[2])[0].toObject(), { a: 0, b: 0, c: 1 });
+    });
+});
+
+describe('STANDALONE CACULATE_FOR_SELECTOR_AST', () => {
+    it('trows an error if called without a selector', () => {
+        try {
+            calculateForAST();
+        } catch (error) {
+            deepEqual(error.message, 'Passed in source is not a Selector AST');
+        }
+    });
+
+    it('calculates specificity', () => {
+        const css = `
+            html #test,
+            .class[cool] {
+                color: red;
+            }
+            foo {
+                background: lime;
+            }
+        `;
+
+        const ast = csstree.parse(css);
+        const selectors = csstree.findAll(ast, (node) => node.type === 'Selector');
+
+        deepEqual(calculateForAST(selectors[0]).toObject(), { a: 1, b: 0, c: 1 });
+        deepEqual(calculateForAST(selectors[1]).toObject(), { a: 0, b: 2, c: 0 });
+        deepEqual(calculateForAST(selectors[2]).toObject(), { a: 0, b: 0, c: 1 });
     });
 });
 

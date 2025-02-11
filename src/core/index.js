@@ -1,1 +1,1 @@
-export { calculate } from './calculate.js';
+export { calculate, calculateForAST } from './calculate.js';

@@ -4,6 +4,7 @@ export type SpecificityObject = { a: number; b: number; c: number };
 
 export default class Specificity {
     static calculate(selector: string | CSSTreeAST): Array<Specificity>;
+    static calculateForAST(selectorAST: CSSTreeAST): Array<Specificity>;
     static compare(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): number;
     static equals(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): boolean;
     static lessThan(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): boolean;
@@ -41,6 +42,7 @@ type CSSTreeAST = Object; // @TODO: Define shape
 
 // CORE
 export function calculate(selector: string | CSSTreeAST): Array<Specificity>;
+export function calculateForAST(selectorAST: CSSTreeAST): Specificity;
 
 // UTIL: COMPARE
 export function equals(s1: SpecificityInstanceOrObject, s2: SpecificityInstanceOrObject): boolean;
