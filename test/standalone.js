@@ -50,22 +50,32 @@ describe('STANDALONE CACULATE WITH PREPARSED AST', () => {
 });
 
 describe('STANDALONE CACULATE_FOR_SELECTOR_AST', () => {
-    const css = `
-        html #test,
-        .class[cool] {
-            color: red;
+    it('trows an error if called without a selector', () => {
+        try {
+            calculateForAST();
+        } catch (error) {
+            deepEqual(error.message, 'Passed in source is not a Selector AST');
         }
-        foo {
-            background: lime;
-        }
-    `;
+    });
 
-    const ast = csstree.parse(css);
-    const selectors = csstree.findAll(ast, (node) => node.type === 'Selector');
+    it('calculates specificity', () => {
+        const css = `
+            html #test,
+            .class[cool] {
+                color: red;
+            }
+            foo {
+                background: lime;
+            }
+        `;
 
-    deepEqual(calculateForAST(selectors[0]).toObject(), { a: 1, b: 0, c: 1 });
-    deepEqual(calculateForAST(selectors[1]).toObject(), { a: 0, b: 2, c: 0 });
-    deepEqual(calculateForAST(selectors[2]).toObject(), { a: 0, b: 0, c: 1 });
+        const ast = csstree.parse(css);
+        const selectors = csstree.findAll(ast, (node) => node.type === 'Selector');
+
+        deepEqual(calculateForAST(selectors[0]).toObject(), { a: 1, b: 0, c: 1 });
+        deepEqual(calculateForAST(selectors[1]).toObject(), { a: 0, b: 2, c: 0 });
+        deepEqual(calculateForAST(selectors[2]).toObject(), { a: 0, b: 0, c: 1 });
+    });
 });
 
 describe('STANDALONE COMPARE', () => {

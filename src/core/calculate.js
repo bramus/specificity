@@ -4,6 +4,11 @@ import { max } from './../util/index.js';
 
 /** @param {import('css-tree').Selector} selectorAST */
 const calculateForAST = (selectorAST) => {
+    // Quit while you're ahead
+    if (!selectorAST || selectorAST.type !== 'Selector') {
+        throw new TypeError(`Passed in source is not a Selector AST`);
+    }
+
     // https://www.w3.org/TR/selectors-4/#specificity-rules
     let a = 0; /* ID Selectors */
     let b = 0; /* Class selectors, Attributes selectors, and Pseudo-classes */
