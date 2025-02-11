@@ -2,14 +2,14 @@ import parse from 'css-tree/selector-parser';
 import Specificity from '../index.js';
 import { max } from './../util/index.js';
 
-/** @param {import('css-tree').Selector} selectorNode */
-const calculateSelectorNode = (selectorNode) => {
+/** @param {import('css-tree').Selector} selectorAST */
+const calculateForAST = (selectorAST) => {
     // https://www.w3.org/TR/selectors-4/#specificity-rules
     let a = 0; /* ID Selectors */
     let b = 0; /* Class selectors, Attributes selectors, and Pseudo-classes */
     let c = 0; /* Type selectors and Pseudo-elements */
 
-    selectorNode.children.forEach((child) => {
+    selectorAST.children.forEach((child) => {
         switch (child.type) {
             case 'IdSelector':
                 a += 1;
@@ -181,7 +181,7 @@ const calculateSelectorNode = (selectorNode) => {
         }
     });
 
-    return { a, b, c };
+    return new Specificity({ a, b, c }, selectorAST);
 };
 
 const convertToAST = (source) => {
@@ -237,7 +237,7 @@ const calculate = (selector) => {
 
     // Selector?
     if (ast.type === 'Selector') {
-        return [new Specificity(calculateSelectorNode(selector), selector)];
+        return [calculateForAST(selector)];
     }
 
     // SelectorList?
@@ -245,11 +245,11 @@ const calculate = (selector) => {
     if (ast.type === 'SelectorList') {
         const specificities = [];
         ast.children.forEach((selector) => {
-            const specificity = new Specificity(calculateSelectorNode(selector), selector);
+            const specificity = calculateForAST(selector);
             specificities.push(specificity);
         });
         return specificities;
     }
 };
 
-export { calculate, calculateSelectorNode };
+export { calculate, calculateForAST };

@@ -1,6 +1,6 @@
 import generate from 'css-tree/generator';
 
-import { calculate, calculateSelectorNode } from './core/index.js';
+import { calculate, calculateForAST } from './core/index.js';
 import { compare, equals, greaterThan, lessThan } from './util/compare.js';
 import { min, max } from './util/filter.js';
 import { sortAsc, sortDesc } from './util/sort.js';
@@ -95,8 +95,8 @@ class Specificity {
         return calculate(selector);
     }
 
-    static calculateSelectorNode(selector) {
-        return calculateSelectorNode(selector);
+    static calculateForAST(selector) {
+        return calculateForAST(selector);
     }
 
     static compare(s1, s2) {
