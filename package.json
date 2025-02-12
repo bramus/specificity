@@ -43,7 +43,7 @@
     "build-esm": "esbuild --bundle ./src/index.js --outfile=./dist/index.js --format=esm --sourcemap --minify",
     "build-cjs": "esbuild --bundle ./src/index.js --outfile=./dist/index.cjs --format=cjs --sourcemap --minify",
     "lint": "prettier --check '{src,test}/**/*.{ts,tsx,js,jsx}'",
-    "prettier": "prettier --write '{src,test}/**/*.{ts,tsx,js,jsx}'",
+    "format": "prettier --write '{src,test}/**/*.{ts,tsx,js,jsx}'",
     "build": "npm run build-esm && npm run build-cjs",
     "prepack": "npm run prevent-dirty-tree && npm run test",
     "prepublish": "npm run build",
