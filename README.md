@@ -138,6 +138,19 @@ $ specificity "header:where(#top) nav li:nth-child(2n), #doormat"
 (1,0,0)
 ```
 
+## Benchmark
+
+A benchmark is included, which you can invoke using `npm run benchmark`.
+
+Sample results:
+
+```
+Specificity.calculate(string) x 433,114 ops/sec ±0.86% (94 runs sampled)
+Specificity.calculate(ast) - using SelectorList x 7,788,047 ops/sec ±1.90% (101 runs sampled)
+Specificity.calculate(ast) - using Selector x 8,503,368 ops/sec ±1.19% (97 runs sampled)
+Specificity.calculateForAST(ast) x 10,037,218 ops/sec ±0.27% (99 runs sampled)
+```
+
 ## License
 
 `@bramus/specificity` is released under the MIT public license. See the enclosed `LICENSE` for details.
