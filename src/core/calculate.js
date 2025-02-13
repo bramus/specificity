@@ -249,8 +249,8 @@ const calculate = (selector) => {
     // ~> Calculate Specificity for each contained Selector
     if (ast.type === 'SelectorList') {
         const specificities = [];
-        ast.children.forEach((selector) => {
-            const specificity = calculateForAST(selector);
+        ast.children.forEach((childAST) => {
+            const specificity = calculateForAST(childAST);
             specificities.push(specificity);
         });
         return specificities;
