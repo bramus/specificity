@@ -40,6 +40,8 @@ s.toString(); // ~> "(0,1,3)"
 
 💡 Under the hood, `@bramus/specificity` uses [CSSTree](https://github.com/csstree/csstree) to do the parsing of strings to Selectors. As a result, the `calculate` method also accepts a [CSSTree AST](https://github.com/csstree/csstree/blob/master/docs/ast.md) of the types `Selector` and `SelectorList`.
 
+If you have a pre-parsed CSSTree AST of the type `Selector` you can pass it into `Specificity.calculateForAST()`. It [performs slightly better](#benchmark) than `Specificity.calculate()` as it needs to check fewer things. It differs from `Specificity.calculate()` in that it does not return an array of `Specificity` instances but only a single value.
+
 ## The Return Format
 
 A calculated specificity is represented as an instance of the `Specificity` class. The `Specificity` class includes methods to get the specificity value in a certain format, along with some convenience methods to compare it against other instances.
