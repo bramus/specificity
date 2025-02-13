@@ -1,6 +1,7 @@
 import { deepEqual } from 'assert';
+import { parse } from 'css-tree';
+
 import Specificity from '../dist/index.js';
-import * as csstree from 'css-tree';
 
 describe('CALCULATE', () => {
     describe('Examples from the spec', () => {
@@ -283,34 +284,34 @@ describe('CALCULATE', () => {
 describe('CALCULATE_FOR_SELECTOR_AST', () => {
     describe('Examples from the spec', () => {
         it('* = (0,0,0)', () => {
-            deepEqual(Specificity.calculateForAST(csstree.parse('*', { context: 'selector' })).toObject(), { a: 0, b: 0, c: 0 });
+            deepEqual(Specificity.calculateForAST(parse('*', { context: 'selector' })).toObject(), { a: 0, b: 0, c: 0 });
         });
         it('li = (0,0,1)', () => {
-            deepEqual(Specificity.calculateForAST(csstree.parse('li', { context: 'selector' })).toObject(), { a: 0, b: 0, c: 1 });
+            deepEqual(Specificity.calculateForAST(parse('li', { context: 'selector' })).toObject(), { a: 0, b: 0, c: 1 });
         });
         it('ul li = (0,0,2)', () => {
-            deepEqual(Specificity.calculateForAST(csstree.parse('ul li', { context: 'selector' })).toObject(), { a: 0, b: 0, c: 2 });
+            deepEqual(Specificity.calculateForAST(parse('ul li', { context: 'selector' })).toObject(), { a: 0, b: 0, c: 2 });
         });
         it('UL OL+LI  = (0,0,3)', () => {
-            deepEqual(Specificity.calculateForAST(csstree.parse('UL OL+LI ', { context: 'selector' })).toObject(), { a: 0, b: 0, c: 3 });
+            deepEqual(Specificity.calculateForAST(parse('UL OL+LI ', { context: 'selector' })).toObject(), { a: 0, b: 0, c: 3 });
         });
         it('H1 + *[REL=up] = (0,1,1)', () => {
-            deepEqual(Specificity.calculateForAST(csstree.parse('H1 + *[REL=up]', { context: 'selector' })).toObject(), { a: 0, b: 1, c: 1 });
+            deepEqual(Specificity.calculateForAST(parse('H1 + *[REL=up]', { context: 'selector' })).toObject(), { a: 0, b: 1, c: 1 });
         });
         it('UL OL LI.red = (0,1,3)', () => {
-            deepEqual(Specificity.calculateForAST(csstree.parse('UL OL LI.red', { context: 'selector' })).toObject(), { a: 0, b: 1, c: 3 });
+            deepEqual(Specificity.calculateForAST(parse('UL OL LI.red', { context: 'selector' })).toObject(), { a: 0, b: 1, c: 3 });
         });
         it('LI.red.level = (0,2,1)', () => {
-            deepEqual(Specificity.calculateForAST(csstree.parse('LI.red.level', { context: 'selector' })).toObject(), { a: 0, b: 2, c: 1 });
+            deepEqual(Specificity.calculateForAST(parse('LI.red.level', { context: 'selector' })).toObject(), { a: 0, b: 2, c: 1 });
         });
         it('#x34y = (1,0,0)', () => {
-            deepEqual(Specificity.calculateForAST(csstree.parse('#x34y', { context: 'selector' })).toObject(), { a: 1, b: 0, c: 0 });
+            deepEqual(Specificity.calculateForAST(parse('#x34y', { context: 'selector' })).toObject(), { a: 1, b: 0, c: 0 });
         });
         it('#s12:not(FOO) = (1,0,1)', () => {
-            deepEqual(Specificity.calculateForAST(csstree.parse('#s12:not(FOO)', { context: 'selector' })).toObject(), { a: 1, b: 0, c: 1 });
+            deepEqual(Specificity.calculateForAST(parse('#s12:not(FOO)', { context: 'selector' })).toObject(), { a: 1, b: 0, c: 1 });
         });
         it('.foo :is(.bar, #baz) = (1,1,0)', () => {
-            deepEqual(Specificity.calculateForAST(csstree.parse('.foo :is(.bar, #baz)', { context: 'selector' })).toObject(), { a: 1, b: 1, c: 0 });
+            deepEqual(Specificity.calculateForAST(parse('.foo :is(.bar, #baz)', { context: 'selector' })).toObject(), { a: 1, b: 1, c: 0 });
         });
     });
 });
