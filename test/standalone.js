@@ -1,6 +1,6 @@
 import { deepEqual } from 'assert';
 
-import packageinfo from './../package.json' assert { type: 'json' };
+import packageinfo from './../package.json' with { type: 'json' };
 
 describe('STANDALONE EXPORTS', async () => {
     const expected = {
