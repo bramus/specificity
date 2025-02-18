@@ -120,7 +120,7 @@ All static methods the `Specificity` class exposes are also exported as standalo
 If you're only interested in including some of these functions into your project you can import them from their Subpath. As a result, your bundle size will be reduced greatly _(except for including the standalone `calculate`, as it returns an array of `Specificity` instances that relies on the whole lot)_
 
 ```js
-import { calculate } from '@bramus/specificity/core';
+import { calculate, calculateForAST } from '@bramus/specificity/core';
 import { compare, equals, greaterThan, lessThan } from '@bramus/specificity/compare';
 import { min, max } from '@bramus/specificity/filter';
 import { sortAsc, sortDesc } from '@bramus/specificity/sort';
