@@ -441,7 +441,7 @@ describe('SORT', () => {
         it('sortAsc(notSortedObjects)', () => {
             deepEqual(
                 Specificity.sortAsc(...notSortedObjects).map((s) => s.value),
-                sortedLowToHigh
+                sortedLowToHigh,
             );
         });
     });
@@ -456,7 +456,7 @@ describe('SORT', () => {
         it('sortDesc(notSortedObjects)', () => {
             deepEqual(
                 Specificity.sortDesc(...notSortedObjects).map((s) => s.value),
-                sortedHighToLow
+                sortedHighToLow,
             );
         });
     });

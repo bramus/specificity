@@ -26,7 +26,7 @@ describe('Specificity Class, manual instance', () => {
                 },
                 {
                     message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
-                }
+                },
             );
         });
         it('Specificity.b', () => {
@@ -36,7 +36,7 @@ describe('Specificity Class, manual instance', () => {
                 },
                 {
                     message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
-                }
+                },
             );
         });
         it('Specificity.c', () => {
@@ -46,7 +46,7 @@ describe('Specificity Class, manual instance', () => {
                 },
                 {
                     message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
-                }
+                },
             );
         });
     });
@@ -99,7 +99,7 @@ describe('Specificity Class, manual instance, no given selector', () => {
                 },
                 {
                     message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
-                }
+                },
             );
         });
         it('Specificity.b', () => {
@@ -109,7 +109,7 @@ describe('Specificity Class, manual instance, no given selector', () => {
                 },
                 {
                     message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
-                }
+                },
             );
         });
         it('Specificity.c', () => {
@@ -119,7 +119,7 @@ describe('Specificity Class, manual instance, no given selector', () => {
                 },
                 {
                     message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
-                }
+                },
             );
         });
     });
@@ -172,7 +172,7 @@ describe('Specificity Class', () => {
                 },
                 {
                     message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
-                }
+                },
             );
         });
         it('Specificity.b', () => {
@@ -182,7 +182,7 @@ describe('Specificity Class', () => {
                 },
                 {
                     message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
-                }
+                },
             );
         });
         it('Specificity.c', () => {
@@ -192,7 +192,7 @@ describe('Specificity Class', () => {
                 },
                 {
                     message: 'Manipulating a Specificity instance is not allowed. Instead, create a new Specificity()',
-                }
+                },
             );
         });
     });
