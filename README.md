@@ -144,13 +144,13 @@ $ specificity "header:where(#top) nav li:nth-child(2n), #doormat"
 
 A benchmark is included, which you can invoke using `npm run benchmark`.
 
-Sample results:
+Sample results (tested on a MacBook Air M3):
 
 ```
-Specificity.calculate(string) x 433,114 ops/sec ±0.86% (94 runs sampled)
-Specificity.calculate(ast) - using SelectorList x 7,788,047 ops/sec ±1.90% (101 runs sampled)
-Specificity.calculate(ast) - using Selector x 8,503,368 ops/sec ±1.19% (97 runs sampled)
-Specificity.calculateForAST(ast) x 10,037,218 ops/sec ±0.27% (99 runs sampled)
+Specificity.calculate(string) x 420,682 ops/sec ±0.34% (98 runs sampled)
+Specificity.calculate(ast) - using SelectorList x 8,994,080 ops/sec ±0.25% (98 runs sampled)
+Specificity.calculate(ast) - using Selector x 11,054,856 ops/sec ±0.39% (91 runs sampled)
+Specificity.calculateForAST(ast) x 12,652,322 ops/sec ±0.35% (96 runs sampled)
 ```
 
 ## License
