@@ -62,7 +62,7 @@ const calculateForAST = (selectorAST) => {
                     case 'nth-last-child':
                         b += 1;
 
-                        if (child.children && child.children.first.selector) {
+                        if (child.children && child.children.first && child.children.first.selector) {
                             // Calculate Specificity from SelectorList
                             const max2 = max(...calculate(child.children.first.selector));
 
@@ -79,7 +79,7 @@ const calculateForAST = (selectorAST) => {
                     case 'host':
                         b += 1;
 
-                        if (child.children && child.children.first) {
+                        if (child.children && child.children.first && child.children.first.children) {
                             // Workaround to a css-tree bug in which it allows complex selectors instead of only compound selectors
                             // We work around it by filtering out any Combinator and successive Selectors
                             const childAST = { type: 'Selector', children: [] };
@@ -124,7 +124,7 @@ const calculateForAST = (selectorAST) => {
                     case 'slotted':
                         c += 1;
 
-                        if (child.children && child.children.first) {
+                        if (child.children && child.children.first && child.children.first.children) {
                             // Workaround to a css-tree bug in which it allows complex selectors instead of only compound selectors
                             // We work around it by filtering out any Combinator and successive Selectors
                             const childAST = { type: 'Selector', children: [] };

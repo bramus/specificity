@@ -174,6 +174,9 @@ describe('CALCULATE', () => {
         it('p:nth-child = (0,1,1) & do not crash', () => {
             deepEqual(Specificity.calculate('p:nth-child')[0].toObject(), { a: 0, b: 1, c: 1 });
         });
+        it('p:nth-child() = (0,1,1) & do not crash', () => {
+            deepEqual(Specificity.calculate('p:nth-child()')[0].toObject(), { a: 0, b: 1, c: 1 });
+        });
     });
 
     describe('CSS :is(), :matches(), :-moz-any = Specificity of the most specific complex selector in its selector list argument', () => {
