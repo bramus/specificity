@@ -34,7 +34,7 @@ const calculateForAST = (selectorAST) => {
 
                     case '-webkit-any':
                     case 'any':
-                        if (child.children) {
+                        if (child.children && child.children.first) {
                             b += 1;
                         }
                         break;
@@ -45,7 +45,7 @@ const calculateForAST = (selectorAST) => {
                     case 'matches':
                     case 'not':
                     case 'has':
-                        if (child.children) {
+                        if (child.children && child.children.first) {
                             // Calculate Specificity from nested SelectorList
                             const max1 = max(...calculate(child.children.first));
 
@@ -79,7 +79,7 @@ const calculateForAST = (selectorAST) => {
                     case 'host':
                         b += 1;
 
-                        if (child.children) {
+                        if (child.children && child.children.first) {
                             // Workaround to a css-tree bug in which it allows complex selectors instead of only compound selectors
                             // We work around it by filtering out any Combinator and successive Selectors
                             const childAST = { type: 'Selector', children: [] };
@@ -124,7 +124,7 @@ const calculateForAST = (selectorAST) => {
                     case 'slotted':
                         c += 1;
 
-                        if (child.children) {
+                        if (child.children && child.children.first) {
                             // Workaround to a css-tree bug in which it allows complex selectors instead of only compound selectors
                             // We work around it by filtering out any Combinator and successive Selectors
                             const childAST = { type: 'Selector', children: [] };
