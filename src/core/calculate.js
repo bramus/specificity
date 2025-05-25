@@ -153,7 +153,7 @@ const calculateForAST = (selectorAST) => {
                     case 'view-transition-old':
                     case 'view-transition-new':
                         // The specificity of a view-transition selector with a * argument is zero.
-                        if (child.children && child.children.first.value === '*') {
+                        if (child.children && child.children.first && child.children.first.value === '*') {
                             break;
                         }
                         // The specificity of a view-transition selector with an argument is the same

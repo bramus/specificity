@@ -105,6 +105,9 @@ describe('CALCULATE', () => {
         it('::view-transition', () => {
             deepEqual(Specificity.calculate('::view-transition')[0].toObject(), { a: 0, b: 0, c: 1 });
         });
+        it('::view-transition-old() & do not crash', () => {
+            deepEqual(Specificity.calculate('::view-transition-old()')[0].toObject(), { a: 0, b: 0, c: 1 });
+        });
         it('::view-transition-group(test)', () => {
             deepEqual(Specificity.calculate('::view-transition-group(test)')[0].toObject(), { a: 0, b: 0, c: 1 });
         });
