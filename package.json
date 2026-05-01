@@ -14,6 +14,18 @@
     "./core": {
       "import": "./src/core/index.js"
     },
+    "./generic": {
+      "import": "./src/core/calculate-generic.js"
+    },
+    "./adapters/csstree": {
+      "import": "./src/core/adapters/csstree.js"
+    },
+    "./adapters/postcss": {
+      "import": "./src/core/adapters/postcss.js"
+    },
+    "./adapters/projectwallace": {
+      "import": "./src/core/adapters/projectwallace.js"
+    },
     "./util": {
       "import": "./src/util/index.js"
     },
@@ -79,10 +91,12 @@
   },
   "homepage": "https://github.com/bramus/specificity#readme",
   "devDependencies": {
+    "@projectwallace/css-parser": "^0.14.10",
     "benchmark": "^2.1.4",
     "esbuild": "^0.25.0",
     "microtime": "^3.1.1",
     "mocha": "^11.1.0",
+    "postcss-selector-parser": "^7.1.1",
     "prettier": "^3.5.1",
     "semver": "^7.7.1"
   },
