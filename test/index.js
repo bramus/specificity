@@ -77,6 +77,24 @@ describe('CALCULATE', () => {
         it('::first-letter', () => {
             deepEqual(Specificity.calculate('::first-letter')[0].toObject(), { a: 0, b: 0, c: 1 });
         });
+        it('::part(my-ident)', () => {
+            deepEqual(Specificity.calculate('::part(my-ident)')[0].toObject(), { a: 0, b: 0, c: 1 });
+        });
+        it('::part(first-ident second-ident)', () => {
+            deepEqual(Specificity.calculate('::part(first-ident second-ident)')[0].toObject(), { a: 0, b: 0, c: 1 });
+        });
+        it('::highlight & do not crash', () => {
+            deepEqual(Specificity.calculate('::highlight')[0].toObject(), { a: 0, b: 0, c: 0 });
+        });
+        it('::highlight() & do not crash', () => {
+            deepEqual(Specificity.calculate('::highlight')[0].toObject(), { a: 0, b: 0, c: 0 });
+        });
+        it('::highlight(my-ident)', () => {
+            deepEqual(Specificity.calculate('::highlight(my-ident)')[0].toObject(), { a: 0, b: 0, c: 1 });
+        });
+        it('::highlight(*)', () => {
+            deepEqual(Specificity.calculate('::highlight(*)')[0].toObject(), { a: 0, b: 0, c: 0 });
+        });
     });
 
     describe('Pseudo-Element Selector ::slotted', () => {
