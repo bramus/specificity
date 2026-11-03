@@ -87,7 +87,7 @@ describe('CALCULATE', () => {
             deepEqual(Specificity.calculate('::highlight')[0].toObject(), { a: 0, b: 0, c: 0 });
         });
         it('::highlight() & do not crash', () => {
-            deepEqual(Specificity.calculate('::highlight')[0].toObject(), { a: 0, b: 0, c: 0 });
+            deepEqual(Specificity.calculate('::highlight()')[0].toObject(), { a: 0, b: 0, c: 0 });
         });
         it('::highlight(my-ident)', () => {
             deepEqual(Specificity.calculate('::highlight(my-ident)')[0].toObject(), { a: 0, b: 0, c: 1 });
