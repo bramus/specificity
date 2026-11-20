@@ -119,7 +119,7 @@ const calculateForAST = (selectorAST) => {
                 break;
 
             case 'PseudoElementSelector':
-                switch (child.name) {
+                switch (child.name.toLowerCase()) {
                     // “The specificity of ::slotted() is that of a pseudo-element, plus the specificity of its argument.”
                     case 'slotted':
                         c += 1;
