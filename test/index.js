@@ -95,6 +95,9 @@ describe('CALCULATE', () => {
         it('::highlight(*)', () => {
             deepEqual(Specificity.calculate('::highlight(*)')[0].toObject(), { a: 0, b: 0, c: 0 });
         });
+        it('::HIGHLIGHT(*)', () => {
+            deepEqual(Specificity.calculate('::HIGHLIGHT(*)')[0].toObject(), { a: 0, b: 0, c: 0 });
+        });
     });
 
     describe('Pseudo-Element Selector ::slotted', () => {
@@ -109,6 +112,9 @@ describe('CALCULATE', () => {
         });
         it('::slotted(#foo invalid)', () => {
             deepEqual(Specificity.calculate('::slotted(#foo invalid)')[0].toObject(), { a: 1, b: 0, c: 1 });
+        });
+        it('::SLOTTED(div#foo)', () => {
+            deepEqual(Specificity.calculate('::SLOTTED(div#foo)')[0].toObject(), { a: 1, b: 0, c: 2 });
         });
         it('::slotted(#foo.bar)', () => {
             deepEqual(Specificity.calculate('::slotted(#foo.bar)')[0].toObject(), { a: 1, b: 1, c: 1 });
@@ -151,6 +157,9 @@ describe('CALCULATE', () => {
         });
         it('::view-transition-new(*)', () => {
             deepEqual(Specificity.calculate('::view-transition-new(*)')[0].toObject(), { a: 0, b: 0, c: 0 });
+        });
+        it('::VIEW-TRANSITION-NEW(*)', () => {
+            deepEqual(Specificity.calculate('::VIEW-TRANSITION-NEW(*)')[0].toObject(), { a: 0, b: 0, c: 0 });
         });
     });
 
