@@ -153,7 +153,7 @@ const calculateForAST = (selectorAST) => {
                     case 'view-transition-old':
                     case 'view-transition-new':
                         // The specificity of a view-transition selector with a * argument is zero.
-                        if (child.children?.first?.value === '*') {
+                        if (child.children?.first?.value?.trim() === '*') {
                             break;
                         }
                         // The specificity of a view-transition selector with an argument is the same
@@ -164,7 +164,7 @@ const calculateForAST = (selectorAST) => {
                     case 'highlight':
                         if (child.children?.size > 0) {
                             // The specificity of a ::highlight() selector with a * argument is zero.
-                            if (child.children.first?.value === '*') {
+                            if (child.children.first?.value?.trim() === '*') {
                                 break;
                             }
                             // The specificity of a ::highlight() selector with a <custom-ident> argument
