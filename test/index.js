@@ -98,6 +98,9 @@ describe('CALCULATE', () => {
         it('::HIGHLIGHT(*)', () => {
             deepEqual(Specificity.calculate('::HIGHLIGHT(*)')[0].toObject(), { a: 0, b: 0, c: 0 });
         });
+        it('::highlight( * )', () => {
+            deepEqual(Specificity.calculate('::highlight( * )')[0].toObject(), { a: 0, b: 0, c: 0 });
+        });
     });
 
     describe('Pseudo-Element Selector ::slotted', () => {
@@ -160,6 +163,9 @@ describe('CALCULATE', () => {
         });
         it('::VIEW-TRANSITION-NEW(*)', () => {
             deepEqual(Specificity.calculate('::VIEW-TRANSITION-NEW(*)')[0].toObject(), { a: 0, b: 0, c: 0 });
+        });
+        it('::view-transition-group( * )', () => {
+            deepEqual(Specificity.calculate('::view-transition-group( * )')[0].toObject(), { a: 0, b: 0, c: 0 });
         });
     });
 
